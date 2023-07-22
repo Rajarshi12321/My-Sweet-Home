@@ -57,11 +57,14 @@ class Recommender:
 #     data_transform = DataTransformationRecommend()
 
 #     data, _ = data_transform.initiate_data_transformation_recommend()
-#     # print(data)
+#     # Data_path = "artifacts\recommend_data.csv"
+#     # data = pd.read_csv(Data_path)
+#     print(data)
 
 #     recommend = Recommender
 #     similar_houses = recommend.get_similar_houses(
 #         'Multistorey Apartm',  'Danapur',  'Semi-Furnished',  '', '6', 'Patna',  '0', '0',   'Sale', '', data, n=6)
 
-#     print(similar_houses[["city", "URLs", "RentOrSale",
-#           "furnishing", "locality", "propertyType"]])
+#     # print(similar_houses[["city", "URLs", "RentOrSale",
+#     #       "furnishing", "locality", "propertyType"]])
+#     print(similar_houses)

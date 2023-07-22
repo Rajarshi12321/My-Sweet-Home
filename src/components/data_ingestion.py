@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     data_transformation = DataTransformation()
 
-    data_transformation.initiate_data_transformation(dataset)
+    Data_array, _ = data_transformation.initiate_data_transformation(dataset)
 
-    # modelTrainer = ModelTrainer()
-    # print(modelTrainer.initiate_model_trainer(Data_array))
+    modelTrainer = ModelTrainer()
+    print(modelTrainer.initiate_model_trainer(Data_array))

@@ -17,7 +17,7 @@ from src.utils import save_object
 @dataclass
 class DataTransformationRecommendConfig:
     preprocessor_obj_file_path = os.path.join(
-        "artifacts", "preprocessor_recommend.pkl")
+        "artifacts", "recommend_data.csv")
 
 
 class DataTransformationRecommend:
@@ -51,33 +51,38 @@ class DataTransformationRecommend:
     def initiate_data_transformation_recommend(self):
         try:
             Data_path = "artifact\Dataset.csv"
-            dataset = pd.read_csv(Data_path)
+            Dataset = pd.read_csv(Data_path)
 
             logging.info("Reading preprocessor object")
 
-            preprocessing_obj = self.get_data_transformer_object(dataset)
+            preprocessing_obj = self.get_data_transformer_object(Dataset)
 
             data = preprocessing_obj.fit_transform(
-                dataset)
+                Dataset)
 
-            logging.info(f"Saved preprocessing object. {data}")
+            logging.info(f"Saved preprocessed object. {data.head()}")
             logging.info(f"saving processor : {preprocessing_obj}")
 
             # Saving the file just to see if processed data is valid for model training
-            DF = pd.DataFrame(data)
+            dataset = pd.DataFrame(data)
 
             # save the dataframe as a csv file
-            DF.to_csv("artifacts/data_preprocessed_recommend.csv", index=False)
+            dataset.to_csv(
+                "artifacts/data_preprocessed_recommend.csv", index=False)
 
-            # save_object(
+            combined_fea = dataset["propertyType"] + "   " + dataset["locality"] + "   " + dataset["furnishing"] + "   " + dataset["flrNum"].astype("str") + "   " + dataset["totalFlrNum"].astype(
+                "str") + "   " + dataset["city"] + "   " + dataset["bedrooms"].astype("str") + "   " + dataset["bathrooms"].astype("str") + "   " + dataset["RentOrSale"] + "   " + dataset["postedOn"].astype("str")
 
-            #     file_path=self.data_transformation_config.preprocessor_obj_file_path,
-            #     obj=preprocessing_obj
+            combined_fea_df = pd.DataFrame({"text": combined_fea, "propertyType": dataset["propertyType"], "locality": dataset[
+                                           "locality"], "furnishing": dataset["furnishing"], "city": dataset["city"], "RentOrSale": dataset["RentOrSale"], "URLs": dataset["URLs"]})
 
-            # )
+            combined_fea_df.to_csv('artifacts/recommend_data.csv', index=False)
+
+            logging.info(
+                f"Saved preprocessed data for recommendation {combined_fea_df.head()}")
 
             return (
-                data,
+                combined_fea_df,
                 self.data_transformation_config.preprocessor_obj_file_path,
             )
 
