@@ -29,7 +29,7 @@ print(preds)
 print(round(np.exp(preds[0])))
 
 # Recommender
-Data_path = "artifacts\recommend_data.csv"
+Data_path = "artifacts/recommend_data.csv"
 data = pd.read_csv(Data_path)
 
 recommend = Recommender
