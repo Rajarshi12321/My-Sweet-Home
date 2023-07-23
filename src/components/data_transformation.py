@@ -33,37 +33,33 @@ class DataTransformation:
             categorical_col = ['propertyType',
                                'locality',
                                'furnishing',
-                               'flrNum',
-                               'totalFlrNum',
                                'city',
                                'bedrooms',
                                'bathrooms',
                                'RentOrSale',
-                               'exactPrice']
+                               'exactPrice',
+                               ]
             # Creating the initial pipeline
 
             imp_feature = ['propertyType',
                            'locality',
                            'furnishing',
-                           'flrNum',
-                           'totalFlrNum',
                            'city',
                            'bedrooms',
                            'bathrooms',
                            'RentOrSale',
-                           'postedOn',
                            "exactPrice"]
 
             Initial_pipline = Pipeline(
                 steps=[('replace', ReplaceValueTransformer(9, np.nan)),
                        ('replace2', ReplaceValueTransformer("9", np.nan)),
                        ('dropna', DropNaTransformer(subset=["exactPrice"])),
-                       ('date_transform', DateTransformTransformer(
-                        date_column='postedOn')),
+                       #    ('date_transform', DateTransformTransformer(
+                       #     date_column='postedOn')),
                        ('fill_na', FillnaTransformer(
                         columns=imp_feature, value="Missing")),
                        ('categorical_label_transform',
-                        CategoricalLabelTransformer(categorical_col))
+                           CategoricalLabelTransformer(categorical_col))
 
                        ]
             )
@@ -95,13 +91,10 @@ class DataTransformation:
             Input_fea = ['propertyType',
                          'locality',
                          'furnishing',
-                         'flrNum',
-                         'totalFlrNum',
                          'city',
                          'bedrooms',
                          'bathrooms',
                          'RentOrSale',
-                         'postedOn',
                          "exactPrice"]
 
             data = preprocessing_obj.fit_transform(

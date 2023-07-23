@@ -1,0 +1,93 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>House price Prediction and Recommend</title>
+      <link rel="stylesheet" href="css\signup.css" />
+      <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+      <py-env>
+        - numpy
+        - pandas
+        - paths:
+          - main.py
+          - city_locality.npy
+      </py-env>
+    </head>
+
+    <body>
+    
+
+      <div class="container">
+        
+        <div class="wrapper">
+          <div class="title">
+            
+            <span>House price prediction and house Recommend</span>
+            
+          </div>
+          <form action="#">
+            <div class="options">
+              <div class="row">
+                <div class="selection">
+                <label for="selectField">City</label>
+                <select id="selectField" name="fruit">
+                  
+                  <option value="apple">Apple</option>
+                  <option value="banana">Banana</option>
+                  <option value="orange">Orange</option>
+                  <option value="grape">Grape</option>
+                </select>
+              </div>
+              </div>
+              <div class="row">
+                <!-- <py-script>
+                  from main import main_fun, city_arr,loc_arr
+                  cities = city_arr()
+                </py-script> -->
+                <input name="Locality" list="scripts" type="text" placeholder="Locality" required />
+                <datalist id="scripts">
+                  <!-- {% for city in cities %} -->
+                      <option value={city} >
+                        {city}
+                        
+                      </option>
+                  <!-- {% endfor %} -->
+                    <!-- <option value="apple">Apple</option>
+                    <option value="banana">Banana</option>
+                    <option value="orange">Orange</option>
+                    <option value="grape">Grape</option> -->
+                </datalist>
+              </div>
+              <div class="row">
+                <input type="text" placeholder="BHK" required />
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Furnishing" required />
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Rent or Sale" required />
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Property Type" required />
+              </div>
+            </div>
+            <div class="button">
+              <input type="submit" value="Predict and Recommend" />
+            </div>
+          </form>
+        </div>
+      </div>
+      
+        <py-script>
+          from main import main_fun, city_arr,loc_arr
+          cities = city_arr()
+          city = 0
+          html_src = f"<option value={city}>{city}</option>"
+          for city in cities:
+            pyscript.write("scripts",city)
+
+        </py-script>
+    </body>
+  </html>
+  
