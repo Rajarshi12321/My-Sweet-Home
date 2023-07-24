@@ -41,18 +41,36 @@
               </div>
               </div>
               <div class="row">
-                <!-- <py-script>
+                <py-script>
                   from main import main_fun, city_arr,loc_arr
                   cities = city_arr()
-                </py-script> -->
+                  <!-- for city in cities:
+                    document.write(f"<p>{city} </p>"); -->
+                </py-script>
                 <input name="Locality" list="scripts" type="text" placeholder="Locality" required />
                 <datalist id="scripts">
-                  <!-- {% for city in cities %} -->
+                  <py-script>
+                    for city in cities:
+                      document.write("<option value={city} > {city}</p>");
+                  </py-script>
+                  {% for city in cities %}
                       <option value={city} >
                         {city}
                         
                       </option>
-                  <!-- {% endfor %} -->
+                  {% endfor %}
+                  <py-script>
+                    from main import main_fun, city_arr,loc_arr
+                    cities = city_arr()
+                    city = 0
+                    html_src = f"<option value={city}>{city}</option>"
+                    pyscript.display(cities)
+                    for city in cities:
+                      city = city
+                      print(html_src)
+                      print(city)
+          
+                  </py-script>
                     <!-- <option value="apple">Apple</option>
                     <option value="banana">Banana</option>
                     <option value="orange">Orange</option>
@@ -79,7 +97,7 @@
         </div>
       </div>
       
-        <py-script>
+        <!-- <py-script>
           from main import main_fun, city_arr,loc_arr
           cities = city_arr()
           city = 0
@@ -87,7 +105,7 @@
           for city in cities:
             pyscript.write("scripts",city)
 
-        </py-script>
+        </py-script> -->
     </body>
   </html>
   
