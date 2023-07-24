@@ -1,0 +1,108 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>House price Prediction and Recommend</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}" />
+      
+    </head>
+
+    <body>
+    
+
+      <div class="container">
+        
+        <div class="wrapper">
+          <div class="title">
+            
+            <span>House price prediction and house Recommend</span>
+            
+          </div>
+          <form action="#">
+            <div class="options">
+              <div class="row">
+                <div class="selection">
+                  <input id="selected_city" list="scripts_city" name="selected_city" type="text" placeholder="City" required onchange="populateLocalityOptions()"  />
+                  <datalist id="scripts_city">
+                    <option value="">Select City</option>
+                  </datalist>
+              
+                </div>
+              </div>
+              
+              <div class="row">
+                <input type="text" placeholder="BHK" required />
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Furnishing" required />
+              </div>
+              <div class="row">
+                <input id="selected_loc" list="scripts_loc" name="locality" type="text" placeholder="Locality" required />
+                <datalist id="scripts_loc">
+                  <option value="apple">Apple</option>
+                  <option value="banana">Banana</option>
+                  <option value="">Select Locality</option>
+                </datalist>
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Rent or Sale" required />
+              </div>
+              <div class="row">
+                <input type="text" placeholder="Property Type" required />
+              </div>
+            </div>
+            <div class="button">
+              <input type="submit" value="Predict and Recommend" />
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <script>
+        function populateCityOptions() {
+            // Fetch cities from the API endpoint
+            fetch('/api/city_arr')
+                .then(response => response.json())
+                .then(data => {
+                    const citySelect = document.getElementById('scripts_city');
+                    citySelect.innerHTML = '<option value="">Select City</option>';
+                    data.forEach(city => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = city;
+                        optionElement.innerText = city;
+                        citySelect.appendChild(optionElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching city data:', error));
+        }
+
+        function populateLocalityOptions() {
+            const selectedCity = document.getElementById('selected_city').value;
+            
+            // Fetch localities for the selected city from the API endpoint
+            fetch(`/api/main_arr/${selectedCity}`)
+                .then(response => response.json())
+                .then(data => {
+                    const localitySelect = document.getElementById('scripts_loc');
+                    localitySelect.innerHTML = '<option value="">Select Locality</option>';
+                    data.forEach(locality => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = locality;
+                        optionElement.innerText = locality;
+                        
+                        localitySelect.appendChild(optionElement);
+                        
+                    });
+                    
+                })
+                .catch(error => console.error('Error fetching locality data:', error));
+        }
+
+        // Populate the cities on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateCityOptions();
+        });
+    </script>
+    </body>
+  </html>
+  
