@@ -15,11 +15,11 @@ print(model)
 pro = load_object("artifacts\preprocessor.pkl")
 
 
-fea = [["Residential House", "Phase 1 Ashiana Nagar", "Semi-Furnished",
-        "Ground", 2.0, "Patna", 3.0, 3.0, "Rent", "Jun 21, '23", 17000.0]]
+fea = ["Residential House", "Phase 1 Ashiana Nagar", "Semi-Furnished",
+       "Patna", 3.0, 3.0, "Rent",  17000.0]
 # Convert fea to a DataFrame
-fea_df = pd.DataFrame(fea, columns=['propertyType', 'locality', 'furnishing', 'flrNum',
-                      'totalFlrNum', 'city', 'bedrooms', 'bathrooms', 'RentOrSale', 'postedOn', 'exactPrice'])
+fea_df = pd.DataFrame([fea], columns=['propertyType', 'locality', 'furnishing',
+                      'city', 'bedrooms', 'bathrooms', 'RentOrSale',  'exactPrice'])
 
 data_preprocess = pro.transform(fea_df)
 preds = model.predict(data_preprocess[:, :-1])
@@ -35,7 +35,7 @@ data = pd.read_csv(Data_path)
 recommend = Recommender
 similar_houses = recommend.get_similar_houses(
     "Residential House", "Phase 1 Ashiana Nagar", "Semi-Furnished",
-    "Ground", "2.0", "Patna", "3.0", "3.0", "Rent", "Jun 21, '23", dataset=data)
+    "Patna", "3.0", "3.0", "Rent", dataset=data)
 
 print(similar_houses)
 

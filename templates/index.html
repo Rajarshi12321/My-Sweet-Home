@@ -18,11 +18,12 @@
             <span>House price prediction and house Recommend</span>
             
           </div>
-          <form action="#">
+          <form action="{{url_for('/')}}" method="post">
             <div class="options">
               <div class="row">
                 <div class="selection">
-                  <input id="selected_city" list="scripts_city" name="selected_city" type="text" placeholder="City" required onchange="populateLocalityOptions()"  />
+                  <label for="selected_city">City</label>
+                  <input id="selected_city" list="scripts_city" name="city" type="text" placeholder="City" required onchange="populateLocalityOptions()"  />
                   <datalist id="scripts_city">
                     <option value="">Select City</option>
                   </datalist>
@@ -31,32 +32,71 @@
               </div>
               
               <div class="row">
-                <input type="text" placeholder="BHK" required />
-              </div>
-              <div class="row">
-                <input type="text" placeholder="Furnishing" required />
-              </div>
-              <div class="row">
-                <input id="selected_loc" list="scripts_loc" name="locality" type="text" placeholder="Locality" required />
-                <datalist id="scripts_loc">
-                  <option value="apple">Apple</option>
-                  <option value="banana">Banana</option>
-                  <option value="">Select Locality</option>
+                <div class="selection">
+                <label for="selected_BHK">BHK</label>
+                <input id="selected_BHK" list="scripts_BHK" name="BHK" type="text" placeholder="BHK" required />
+                <datalist id="scripts_BHK">
+                  {%for i in BHK%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
                 </datalist>
               </div>
-              <div class="row">
-                <input type="text" placeholder="Rent or Sale" required />
               </div>
               <div class="row">
-                <input type="text" placeholder="Property Type" required />
+                <div class="selection">
+                <label for="selected_Furnish">Furnishing</label>
+                <input id="selected_Furnish" list="scripts_Furnish" name="furnishing" type="text" placeholder="Furnishing" required />
+                <datalist id="scripts_Furnish">
+                  {%for i in Furnish%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                </datalist>
+                </div>
+              </div>
+              <div class="row">
+                <div class="selection">
+                <label for="selected_loc">Locality</label>
+                <input id="selected_loc" list="scripts_loc" name="locality" type="text" placeholder="Locality" required />
+                <datalist id="scripts_loc">
+                </datalist>
+                </div>
+              </div>
+              <div class="row">
+                <div class="selection">
+                <label for="selected_RoS">Rent or Sale</label>
+                <input id="selected_RoS" list="scripts_RoS" name="RentOrSale" type="text" placeholder="Rent or Sale" required />
+                <datalist id="scripts_RoS">
+                  {%for i in Ros%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                </datalist>
+                </div>
+              </div>
+              <div class="row">
+                <div class="selection">
+                <label for="selected_PropType">Property Type</label>
+                <input id="selected_PropType" list="scripts_PropType" name="propertyType" type="text" placeholder="Property Type" required />
+                <datalist id="scripts_PropType">
+                  {%for i in PropType%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                  <option value="No Preference">No Preference</option>
+                </datalist>
+                </div>
               </div>
             </div>
+            <div>
+              The result is {{results}} 
+           </div>
             <div class="button">
-              <input type="submit" value="Predict and Recommend" />
+              <input type="submit" value="Predict and Recommend" required />
             </div>
           </form>
         </div>
+        
+        
       </div>
+      
       
       <script>
         function populateCityOptions() {
@@ -89,10 +129,14 @@
                         const optionElement = document.createElement('option');
                         optionElement.value = locality;
                         optionElement.innerText = locality;
-                        
                         localitySelect.appendChild(optionElement);
                         
                     });
+                    const optionElement = document.createElement('option');
+                    optionElement.value = "No Preference";
+                    optionElement.innerText = "No Preference";
+                    
+                    localitySelect.appendChild(optionElement);
                     
                 })
                 .catch(error => console.error('Error fetching locality data:', error));

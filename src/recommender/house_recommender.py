@@ -21,15 +21,15 @@ class Recommender:
     def __init__(self):
         pass
 
-    def get_similar_houses(propType, loc, furn, fn, Fnum, city, bed, Bath, RorS, PostDays, dataset, n=6):
+    def get_similar_houses(propType, loc, furn,  city, bed, Bath, RorS, dataset, n=6):
 
         # converting the text data to feature vectors
 
         vectorize = TfidfVectorizer()
 
         # making input str
-        input_str = propType + " " + loc + " " + furn + " " + fn + " " + Fnum + \
-            " " + city + " " + bed + " " + Bath + " " + RorS + " " + PostDays
+        input_str = propType + " " + loc + " " + furn + " " + \
+            city + " " + bed + " " + Bath + " " + RorS + " "
 
         # Data_path = "artifacts\recommend.csv"
         # dataset = pd.read_csv(Data_path)

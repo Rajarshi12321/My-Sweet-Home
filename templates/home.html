@@ -3,36 +3,8 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>House price Prediction and Recommend</title>
-      <link rel="stylesheet" href="css\signup.css" />
-      <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-      <py-env>
-        
-      </py-env>
-      <py-script>
-        def populate(s1, s2):
-          s1 = document.getElementById(s1)
-          s2 = document.getElementById(s2)
-
-          s2.innerHTML = ""
-
-          selected_city = s1.value
-
-          if selected_city == "apple":
-              option_array = ["Locality A", "Locality B", "Locality C"]
-          elif selected_city == "banana":
-              option_array = ["Locality D", "Locality E", "Locality F"]
-          elif selected_city == "orange":
-              option_array = ["Locality G", "Locality H", "Locality I"]
-          elif selected_city == "grape":
-              option_array = ["Locality J", "Locality K", "Locality L"]
-
-          for option in option_array:
-              new_option = document.createElement("option")
-              new_option.value = option
-              new_option.innerHTML = option
-              s2.options.add(new_option)
-      </py-script>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}" />
+      
     </head>
 
     <body>
@@ -50,46 +22,67 @@
             <div class="options">
               <div class="row">
                 <div class="selection">
-                  <label for="selectField">City</label>
-                  <select id="selected_city" name="selected_city" onchange="populate(this.id,'BHK')">
-                    
-                    <option value="apple">Apple</option>
-                    <option value="banana">Banana</option>
-                    <option value="orange">Orange</option>
-                    <option value="grape">Grape</option>
-                  </select>
+                  <label for="selected_city">City</label>
+                  <input id="selected_city" list="scripts_city" name="city" type="text" placeholder="City" required onchange="populateLocalityOptions()"  />
+                  <datalist id="scripts_city">
+                    <option value="">Select City</option>
+                  </datalist>
+              
                 </div>
               </div>
+              
               <div class="row">
-                <input id= "locality" name="locality" list="scripts" type="text" placeholder="Locality" required />
-                <datalist id="scripts" name = "scripts">
-                  <!-- <option value="apple">Apple</option>
-                  <option value="banana">Banana</option>
-                  <option value="orange">Orange</option> -->
-                  
-                  
+                <div class="selection">
+                <label for="selected_BHK">BHK</label>
+                <input id="selected_BHK" list="scripts_BHK" name="BHK" type="text" placeholder="BHK" required />
+                <datalist id="scripts_BHK">
+                  {%for i in BHK%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
                 </datalist>
+              </div>
               </div>
               <div class="row">
                 <div class="selection">
-                  <label for="selectField">BHK</label>
-                  <select id="BHK" name="BHK" >
-                    
-                    <!-- <option value="apple">Apple</option>
-                    <option value="banana">Banana</option>
-                    <option value="orange">Orange</option>
-                    <option value="grape">Grape</option> -->
-                  </select>
+                <label for="selected_Furnish">Furnishing</label>
+                <input id="selected_Furnish" list="scripts_Furnish" name="furnishing" type="text" placeholder="Furnishing" required />
+                <datalist id="scripts_Furnish">
+                  {%for i in Furnish%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                </datalist>
                 </div>
               </div>
               <div class="row">
-                <input type="text" placeholder="Furnishing" required />
+                <div class="selection">
+                <label for="selected_loc">Locality</label>
+                <input id="selected_loc" list="scripts_loc" name="locality" type="text" placeholder="Locality" required />
+                <datalist id="scripts_loc">
+                </datalist>
+                </div>
               </div>
               <div class="row">
-                <input type="text" placeholder="Rent or Sale" required />
+                <div class="selection">
+                <label for="selected_RoS">Rent or Sale</label>
+                <input id="selected_RoS" list="scripts_RoS" name="RentOrSale" type="text" placeholder="Rent or Sale" required />
+                <datalist id="scripts_RoS">
+                  {%for i in Ros%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                </datalist>
+                </div>
               </div>
               <div class="row">
-                <input type="text" placeholder="Property Type" required />
+                <div class="selection">
+                <label for="selected_PropType">Property Type</label>
+                <input id="selected_PropType" list="scripts_PropType" name="propertyType" type="text" placeholder="Property Type" required />
+                <datalist id="scripts_PropType">
+                  {%for i in PropType%}
+                    <option value="{{i}}">{{i}}</option>
+                  {%endfor%}
+                  <option value="No Preference">No Preference</option>
+                </datalist>
+                </div>
               </div>
             </div>
             <div class="button">
@@ -98,9 +91,56 @@
           </form>
         </div>
       </div>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.10.2/brython.min.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.10.2/brython_stdlib.js"></script>
-  
+      
+      <script>
+        function populateCityOptions() {
+            // Fetch cities from the API endpoint
+            fetch('/api/city_arr')
+                .then(response => response.json())
+                .then(data => {
+                    const citySelect = document.getElementById('scripts_city');
+                    citySelect.innerHTML = '<option value="">Select City</option>';
+                    data.forEach(city => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = city;
+                        optionElement.innerText = city;
+                        citySelect.appendChild(optionElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching city data:', error));
+        }
+
+        function populateLocalityOptions() {
+            const selectedCity = document.getElementById('selected_city').value;
+            
+            // Fetch localities for the selected city from the API endpoint
+            fetch(`/api/main_arr/${selectedCity}`)
+                .then(response => response.json())
+                .then(data => {
+                    const localitySelect = document.getElementById('scripts_loc');
+                    localitySelect.innerHTML = '<option value="">Select Locality</option>';
+                    data.forEach(locality => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = locality;
+                        optionElement.innerText = locality;
+                        localitySelect.appendChild(optionElement);
+                        
+                    });
+                    const optionElement = document.createElement('option');
+                    optionElement.value = "No Preference";
+                    optionElement.innerText = "No Preference";
+                    
+                    localitySelect.appendChild(optionElement);
+                    
+                })
+                .catch(error => console.error('Error fetching locality data:', error));
+        }
+
+        // Populate the cities on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateCityOptions();
+        });
+    </script>
     </body>
   </html>
   
