@@ -59,24 +59,40 @@ def home():
 
     else:
         print("submitted")
+        if request.form.get('BHK') != "5+":
+            bed = request.form.get('BHK')
+            bath = request.form.get('BHK')
+        else:
+            bed = "7"
+            bath = "7"
+
         data = CustomData(
             propertyType=request.form.get('propertyType'),
             locality=request.form.get('locality'),
             furnishing=request.form.get('furnishing'),
             city=request.form.get('city'),
-            bedrooms=request.form.get('bedrooms'),
-            bathrooms=request.form.get('bathrooms'),
-            RentOrSale=request.form.get('RentOrSale')
+            bedrooms=bed,
+            bathrooms=bath,
+            RentOrSale=request.form.get('RentOrSale'),
+            exactPrice=" "
 
         )
         pred_df = data.get_data_as_data_frame()
         print(pred_df)
-        print("Before Prediction")
+        # print("Before Prediction")
 
-        predict_pipeline = PredictRecommendPipeline()
-        print("Mid Prediction")
-        results = predict_pipeline.predict(pred_df)
-        print("after Prediction")
+        predict_recommend_pipeline = PredictRecommendPipeline()
+        # print("Mid Prediction")
+        results = predict_recommend_pipeline.predict(pred_df)
+        # print("after Prediction")
+        print(pred_df, "df")
+        print(results, "res")
+        recommend = predict_recommend_pipeline.recommend(pred_df)
+
+        print(pred_df['propertyType'], "Yupp")
+        print(pred_df['locality'], "Yupp")
+        print(recommend, "Yupp")
+
         return render_template('index.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS, results=results)
 
 

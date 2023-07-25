@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import numpy as np
+import math
 from src.exception import CustomException
 from src.utils import load_object
 from src.recommender.house_recommender import Recommender
@@ -32,11 +33,17 @@ class PredictRecommendPipeline:
         try:
             Data_path = "artifacts/recommend_data.csv"
             data = pd.read_csv(Data_path)
+            print(features['propertyType'], "hi\n\n\n\n")
 
             recommend = Recommender
             similar_houses = recommend.get_similar_houses(
-                features[0],   features[1],   features[2],  features[3],   features[4],  features[5],    features[6],
-                dataset=data)
+                str(features['propertyType']), str(
+                    features['locality']), str(features['furnishing']),
+                str(features['city']), str(features['bedrooms']), str(features['bathrooms']), str(features['RentOrSale']), dataset=data)
+            # similar_houses = recommend.get_similar_houses(
+            #     str(features['propertyType']
+            #         ), "Phase 1 Ashiana Nagar", "Semi-Furnished",
+            #     "Patna", "3.0", "3.0", "Rent", dataset=data)
 
             return similar_houses
 
@@ -52,7 +59,8 @@ class CustomData:
                  city: str,
                  bedrooms: str,
                  bathrooms: str,
-                 RentOrSale: str):
+                 RentOrSale: str,
+                 exactPrice: str):
 
         self.propertyType = propertyType
 
@@ -68,6 +76,8 @@ class CustomData:
 
         self.RentOrSale = RentOrSale
 
+        self.exactPrice = exactPrice
+
     def get_data_as_data_frame(self):
         try:
             custom_data_input_dict = {
@@ -78,9 +88,31 @@ class CustomData:
                 "bedrooms": [self.bedrooms],
                 "bathrooms": [self.bathrooms],
                 "RentOrSale": [self.RentOrSale],
+                "exactPrice": [self.exactPrice],
             }
 
             return pd.DataFrame(custom_data_input_dict)
 
         except Exception as e:
             raise CustomException(e, sys)
+
+
+# if __name__ == '__main__':
+
+#     model = load_object("artifacts\model.pkl")
+
+#     print(model.get_params())
+#     print(model)
+
+#     pro = load_object("artifacts\preprocessor.pkl")
+
+#     predict_pipeline = PredictRecommendPipeline()
+
+#     fea = ["Residential House", "Phase 1 Ashiana Nagar", "Semi-Furnished",
+#            "Patna", 3.0, 3.0, "Rent",  17000.0]
+#     # Convert fea to a DataFrame
+#     fea_df = pd.DataFrame([fea], columns=['propertyType', 'locality', 'furnishing',
+#                                           'city', 'bedrooms', 'bathrooms', 'RentOrSale',  'exactPrice'])
+
+#     data_preprocess = pro.transform(fea_df)
+#     preds = model.predict(data_preprocess[:, :-1])
