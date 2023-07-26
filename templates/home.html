@@ -3,7 +3,7 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>House price Prediction and Recommend</title>
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}" />
+      <link rel="stylesheet" href="{{url_for('static', filename='css/signup.css')}}" />
       
     </head>
 
@@ -18,7 +18,7 @@
             <span>House price prediction and house Recommend</span>
             
           </div>
-          <form action="#">
+          <form action="/" method="post">
             <div class="options">
               <div class="row">
                 <div class="selection">
@@ -85,12 +85,53 @@
                 </div>
               </div>
             </div>
+
             <div class="button">
-              <input type="submit" value="Predict and Recommend" />
+              <input type="submit" value="Predict and Recommend" required />
             </div>
           </form>
+          <div class="output">
+          <div class="result">
+            The Predicted range of price is {{result}}
+         </div>
+        </div>
+        </div>
+        
+        
+      </div>
+      <div class="recommend-info">
+        <div class="recommend-title">
+          Some recommended properties according to your choices ({{similar}} similar)
         </div>
       </div>
+      <div class="grid-container">
+
+        {%for index, row in dataset.iterrows()%}
+                    
+                  
+
+          <a href="{{row['URLs']}}" class="data-card" target="_blank">
+            <img src="static\img\beautiful_house.jpg" alt="House pics" width=100% %>
+
+            
+            <div class="recommended-content">
+              <p> City : {{row["city"]}} </p>
+              <p> Locality : {{row["locality"]}} </p>
+              <p st> Property Type : {{row["propertyType"]}}  </p>
+              <p> Furnishing : {{row["furnishing"]}} </p>
+              <p> BHK : {{row["BHK"]}} </p>
+              <p> For : {{row["RentOrSale"]}} </p>
+            </div>
+          </a>
+        {%endfor%}
+      </div>
+
+
+   
+
+
+    
+      
       
       <script>
         function populateCityOptions() {

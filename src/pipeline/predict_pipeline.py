@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 from src.exception import CustomException
-from src.utils import load_object
+from src.utils import load_object, output_within_range
 from src.recommender.house_recommender import Recommender
 
 
@@ -24,7 +24,8 @@ class PredictRecommendPipeline:
             data_scaled = preprocessor.transform(fea_df)
             preds = model.predict(data_scaled[:, :-1])
             prediction = round(np.exp(preds[0]))
-            return prediction
+            result = output_within_range(prediction)
+            return result
 
         except Exception as e:
             raise CustomException(e, sys)

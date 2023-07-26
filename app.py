@@ -2,6 +2,8 @@
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from src.pipeline.predict_pipeline import CustomData, PredictRecommendPipeline
+from src.pipeline.scraping_pipeline import ImageScrappingPipeline
+from math import trunc
 
 app = Flask(__name__)
 
@@ -83,17 +85,25 @@ def home():
 
         predict_recommend_pipeline = PredictRecommendPipeline()
         # print("Mid Prediction")
-        results = predict_recommend_pipeline.predict(pred_df)
+        result = predict_recommend_pipeline.predict(pred_df)
         # print("after Prediction")
         print(pred_df, "df")
-        print(results, "res")
+        print(result, "res")
         recommend = predict_recommend_pipeline.recommend(pred_df)
 
         print(pred_df['propertyType'], "Yupp")
         print(pred_df['locality'], "Yupp")
-        print(recommend, "Yupp")
+        print((recommend["distances"].mean())*100, "Yupp")
+        similarity = (recommend["distances"].mean())*100
+        similarity = trunc(similarity)
+        similarity = str(similarity)+"%"
 
-        return render_template('index.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS, results=results)
+        # img_pipeline = ImageScrappingPipeline
+        # recommend = img_pipeline.get_images(recommend)
+
+        # print(recommend)
+
+        return render_template('home.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS, result=result, dataset=recommend, similar=similarity)
 
 
 # @app.route('/home', methods=['GET', 'POST'])

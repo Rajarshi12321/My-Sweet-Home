@@ -176,3 +176,47 @@ class FillnaTransformer(BaseEstimator, TransformerMixin):
         X_transformed[self.columns] = X_transformed[self.columns].fillna(
             value=self.value)
         return X_transformed
+
+
+def format_indian_currency(num, currency_symbol='₹'):
+    # Convert the number to a string and reverse it for easier processing
+    num_str = str(num)[::-1]
+
+    # Create a list to store the formatted parts of the number
+
+    formatted_parts = []
+
+    chunk = num_str[0:3][::-1]
+    formatted_parts.append(chunk)
+    # Iterate through the reversed number string in chunks of three digits
+    for i in range(3, len(num_str), 2):
+        # Get the chunk and reverse it back to the original order
+        chunk = num_str[i:i+2][::-1]
+        formatted_parts.append(chunk)
+
+    # Reverse the list to get the correct order and join the parts with commas
+    formatted_number = ','.join(formatted_parts[::-1])
+
+    # Add the currency symbol at the beginning of the formatted number
+    formatted_number = f"{currency_symbol}{formatted_number}"
+
+    return formatted_number
+
+
+def output_within_range(number):
+    # Calculate the output within the range of 15000 to 20000
+    number1 = number/pow(10, 3)
+    number1 = np.round(number1) * pow(10, 3)
+    number2 = number/pow(10, 4)
+    number2 = np.round(number2) * pow(10, 4)
+    # Convert the output to a string and return it
+    num1 = format_indian_currency(str(number1)[:-2])
+    num2 = format_indian_currency(str(number2)[:-2])
+    if num1 >= num2:
+        output_str = f"{num2} - {num1}"
+    else:
+        output_str = f"{num1} - {num2}"
+
+    print(number)
+    # print(format_indian_currency(str(number1)[:-2]))
+    return output_str

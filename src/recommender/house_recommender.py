@@ -9,7 +9,6 @@ import pandas as pd
 
 from src.exception import CustomException
 from src.logger import logging
-logging.info("no , src.utils")
 
 
 # @dataclass
