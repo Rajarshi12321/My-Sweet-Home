@@ -13,8 +13,8 @@ class PredictRecommendPipeline:
 
     def predict(self, features):
         try:
-            model_path = "artifacts\model.pkl"
-            preprocessor_path = "artifacts\preprocessor.pkl"
+            model_path = "artifacts/model.pkl"
+            preprocessor_path = "artifacts/preprocessor.pkl"
             print("Before Loading")
             model = load_object(file_path=model_path)
             preprocessor = load_object(file_path=preprocessor_path)
@@ -41,10 +41,6 @@ class PredictRecommendPipeline:
                 str(features['propertyType']), str(
                     features['locality']), str(features['furnishing']),
                 str(features['city']), str(features['bedrooms']), str(features['bathrooms']), str(features['RentOrSale']), dataset=data)
-            # similar_houses = recommend.get_similar_houses(
-            #     str(features['propertyType']
-            #         ), "Phase 1 Ashiana Nagar", "Semi-Furnished",
-            #     "Patna", "3.0", "3.0", "Rent", dataset=data)
 
             return similar_houses
 
