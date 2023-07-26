@@ -10,8 +10,6 @@ dill
 requests
 beautifulsoup4
 bs4
-importlib-metadata==6.8.0
-importlib-resources==6.0.0
 librosa==0.10.0.post2
 lxml==4.9.3
 # -e .
