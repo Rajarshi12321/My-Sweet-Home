@@ -7,4 +7,5 @@ catboost
 xgboost
 Flask
 dill
+requests
 -e .
