@@ -50,7 +50,7 @@ class DataTransformationRecommend:
 
     def initiate_data_transformation_recommend(self):
         try:
-            Data_path = "artifact\Dataset.csv"
+            Data_path = "artifact/Dataset.csv"
             Dataset = pd.read_csv(Data_path)
 
             logging.info("Reading preprocessor object")

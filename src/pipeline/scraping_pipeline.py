@@ -28,7 +28,7 @@ class ImageScrappingPipeline:
                 img_div = div_element.find("img")
                 return img_div.get("src")
             except:
-                return "static\img\default_pic.png"
+                return "static/img/default_pic.png"
         except requests.exceptions.RequestException as e:
             return "Error fetching the page: {}".format(e)
         except Exception as e:

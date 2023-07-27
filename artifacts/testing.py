@@ -6,13 +6,13 @@ import numpy as np
 import math
 
 
-model = load_object("artifacts\model.pkl")
+model = load_object("artifacts/model.pkl")
 
 print(model.get_params())
 print(model)
 
 
-pro = load_object("artifacts\preprocessor.pkl")
+pro = load_object("artifacts/preprocessor.pkl")
 
 
 fea = ["Residential House", "Phase 1 Ashiana Nagar", "Semi-Furnished",
