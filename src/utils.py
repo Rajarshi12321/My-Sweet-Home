@@ -29,6 +29,27 @@ def date_transform(date):
         raise CustomException(e, sys)
 
 
+def remove_outliers_iqr(df):
+    # Calculate the first quartile (25th percentile) and third quartile (75th percentile)
+    q1 = df.quantile(0.25)
+    q3 = df.quantile(0.75)
+
+    # Calculate the interquartile range (IQR)
+    iqr = q3 - q1
+
+    # Define the lower and upper bounds for outliers
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+
+    if lower_bound['exactPrice'] < 0:
+        lower_bound = df.min()
+
+    # Filter rows where any value is within the lower and upper bounds
+    df_no_outliers = df[~((df < lower_bound) | (df > upper_bound)).any(axis=1)]
+
+    return df_no_outliers
+
+
 def save_object(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
@@ -212,9 +233,11 @@ def output_within_range(number):
     # Convert the output to a string and return it
     num1 = format_indian_currency(str(number1)[:-2])
     num2 = format_indian_currency(str(number2)[:-2])
-    if num1 >= num2:
+
+    if number1 >= number2:
         output_str = f"{num2} - {num1}"
     else:
+
         output_str = f"{num1} - {num2}"
 
     print(number)

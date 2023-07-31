@@ -59,7 +59,7 @@ class DataTransformation:
                        ('fill_na', FillnaTransformer(
                         columns=imp_feature, value="Missing")),
                        ('categorical_label_transform',
-                           CategoricalLabelTransformer(categorical_col))
+                           CategoricalLabelTransformer(categorical_col)),
 
                        ]
             )
@@ -104,7 +104,7 @@ class DataTransformation:
             logging.info(f"saving processor : {preprocessing_obj}")
 
             # Saving the file just to see if processed data is valid for model training
-            DF = pd.DataFrame(data)
+            DF = pd.DataFrame(data, columns=Input_fea)
 
             # save the dataframe as a csv file
             DF.to_csv("artifacts/processed_data.csv", index=False)
@@ -117,7 +117,7 @@ class DataTransformation:
             )
 
             return (
-                data,
+                DF,
                 self.data_transformation_config.preprocessor_obj_file_path,
             )
 

@@ -11,11 +11,6 @@ from src.exception import CustomException
 from src.logger import logging
 
 
-# @dataclass
-# class DataTransformationConfig:
-#     preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
-
-
 class Recommender:
     def __init__(self):
         pass
@@ -27,14 +22,12 @@ class Recommender:
         vectorize = TfidfVectorizer()
 
         # making input str
-        input_str = propType + " " + loc + " " + furn + " " + \
-            city + " " + bed + " " + Bath + " " + RorS + " "
-
-        # Data_path = "artifacts\recommend.csv"
-        # dataset = pd.read_csv(Data_path)
+        input_str = propType + "   " + loc + "   " + furn + "   " + \
+            city + "   " + bed + "   " + Bath + "   " + RorS + "   "
 
         # adding the input for tfdif
         dataset.loc[len(dataset.index)] = input_str
+        # dataset.to_csv("artifacts/demo")
 
         # vecterization
         feature_vectors = vectorize.fit_transform(dataset["text"])
@@ -50,20 +43,22 @@ class Recommender:
         return dataset.loc[n_largest.index[2:]]
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     # Getting the data for processing
-#     data_transform = DataTransformationRecommend()
+    # Getting the data for processing
+    data_transform = DataTransformationRecommend()
 
-#     data, _ = data_transform.initiate_data_transformation_recommend()
-#     # Data_path = "artifacts\recommend_data.csv"
-#     # data = pd.read_csv(Data_path)
-#     print(data)
+    data, _ = data_transform.initiate_data_transformation_recommend()
+    # Data_path = "artifacts\recommend_data.csv"
+    # data = pd.read_csv(Data_path)
+    print(data)
+    # Data_path = "artifacts/recommend_data.csv"
+    # data = pd.read_csv(Data_path)
 
-#     recommend = Recommender
-#     similar_houses = recommend.get_similar_houses(
-#         'Multistorey Apartm',  'Danapur',  'Semi-Furnished',  '', '6', 'Patna',  '0', '0',   'Sale', '', data, n=6)
+    recommend = Recommender
+    similar_houses = recommend.get_similar_houses(
+        'Multistorey Apartment',  'Narendrapur',  'Semi-Furnished', 'Kolkata',  '3', '3',   'Rent', data, n=6)
 
-#     # print(similar_houses[["city", "URLs", "RentOrSale",
-#     #       "furnishing", "locality", "propertyType"]])
-#     print(similar_houses)
+    # print(similar_houses[["city", "URLs", "RentOrSale",
+    #       "furnishing", "locality", "propertyType"]])
+    print(similar_houses)

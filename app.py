@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request, render_template
 from src.pipeline.predict_pipeline import CustomData, PredictRecommendPipeline
 from src.pipeline.scraping_pipeline import ImageScrappingPipeline
 from math import trunc
+from src.logger import logging
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ propType = ['Multistorey Apartment', 'Residential House',
 
 RoS = ['Rent', 'Sale']
 
-BHK = ["1", "2", "3", "4", "5", "5+"]
+BHK = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 Furnishing = ['Semi-Furnished', 'Furnished', 'Unfurnished']
 
@@ -61,39 +62,37 @@ def home():
 
     else:
         print("submitted")
-        if request.form.get('BHK') != "5+":
-            bed = request.form.get('BHK')
-            bath = request.form.get('BHK')
-        else:
-            bed = "7"
-            bath = "7"
 
         data = CustomData(
             propertyType=request.form.get('propertyType'),
             locality=request.form.get('locality'),
             furnishing=request.form.get('furnishing'),
             city=request.form.get('city'),
-            bedrooms=bed,
-            bathrooms=bath,
+            bedrooms=request.form.get('BHK'),
+            bathrooms=request.form.get('BHK'),
             RentOrSale=request.form.get('RentOrSale'),
             exactPrice=" "
 
         )
         pred_df = data.get_data_as_data_frame()
         print(pred_df)
-        # print("Before Prediction")
+
+        print("Before Prediction")
 
         predict_recommend_pipeline = PredictRecommendPipeline()
+
         # print("Mid Prediction")
+
         result = predict_recommend_pipeline.predict(pred_df)
-        # print("after Prediction")
-        print(pred_df, "df")
-        print(result, "res")
+
+        logging.info(f"{result} Prediction Result")
+
+        print("after Prediction")
+        print(pred_df, "DataFrame")
+        print(result, "result")
+
         recommend = predict_recommend_pipeline.recommend(pred_df)
 
-        print(pred_df['propertyType'], "Yupp")
-        print(pred_df['locality'], "Yupp")
-        print((recommend["distances"].mean())*100, "Yupp")
         similarity = (recommend["distances"].mean())*100
         similarity = trunc(similarity)
         similarity = str(similarity)+"%"
@@ -101,14 +100,12 @@ def home():
         # img_pipeline = ImageScrappingPipeline
         # recommend = img_pipeline.get_images(recommend)
 
-        # print(recommend)
+        logging.info(
+            f" {recommend} Recommended properties with {similarity} % similarity")
+
+        print(recommend)
 
         return render_template('home.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS, result=result, dataset=recommend, similar=similarity)
-
-
-# @app.route('/home', methods=['GET', 'POST'])
-# def home():
-#     return render_template('index.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS)
 
 
 if __name__ == '__main__':

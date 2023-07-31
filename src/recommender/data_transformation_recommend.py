@@ -70,8 +70,9 @@ class DataTransformationRecommend:
             dataset.to_csv(
                 "artifacts/data_preprocessed_recommend.csv", index=False)
 
-            combined_fea = dataset["propertyType"] + "   " + dataset["locality"] + "   " + dataset["furnishing"] + "   " + dataset["flrNum"].astype("str") + "   " + dataset["totalFlrNum"].astype(
-                "str") + "   " + dataset["city"] + "   " + dataset["bedrooms"].astype("str") + "   " + dataset["bathrooms"].astype("str") + "   " + dataset["RentOrSale"] + "   " + dataset["postedOn"].astype("str")
+            combined_fea = dataset["propertyType"] + "   " + dataset["locality"] + "   " + dataset["furnishing"] + "   " + dataset["city"] + \
+                "   " + dataset["bedrooms"].astype("str") + "   " + dataset["bathrooms"].astype(
+                    "str") + "   " + dataset["RentOrSale"]
 
             combined_fea_df = pd.DataFrame({"text": combined_fea, "propertyType": dataset["propertyType"], "locality": dataset[
                                            "locality"], "furnishing": dataset["furnishing"], "city": dataset["city"], "RentOrSale": dataset["RentOrSale"], "BHK": dataset["bedrooms"], "URLs": dataset["URLs"]})

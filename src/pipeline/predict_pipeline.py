@@ -13,7 +13,13 @@ class PredictRecommendPipeline:
 
     def predict(self, features):
         try:
-            model_path = "artifacts/model.pkl"
+            # print(features["RentOrSale"], "hiii")
+            # print(features["RentOrSale"] == "Sale", "hiii")
+
+            if (features["RentOrSale"] == "Rent").all():
+                model_path = "artifacts/model_rent.pkl"
+            else:
+                model_path = "artifacts/model.pkl"
             preprocessor_path = "artifacts/preprocessor.pkl"
             print("Before Loading")
             model = load_object(file_path=model_path)
@@ -23,7 +29,7 @@ class PredictRecommendPipeline:
                                                      'city', 'bedrooms', 'bathrooms', 'RentOrSale',  'exactPrice'])
             data_scaled = preprocessor.transform(fea_df)
             preds = model.predict(data_scaled[:, :-1])
-            prediction = round(np.exp(preds[0]))
+            prediction = round(preds[0])
             result = output_within_range(prediction)
             return result
 
@@ -34,14 +40,19 @@ class PredictRecommendPipeline:
         try:
             Data_path = "artifacts/recommend_data.csv"
             data = pd.read_csv(Data_path)
-            print(features['propertyType'], "hi\n\n\n\n")
 
             recommend = Recommender
             similar_houses = recommend.get_similar_houses(
-                str(features['propertyType']), str(
-                    features['locality']), str(features['furnishing']),
-                str(features['city']), str(features['bedrooms']), str(features['bathrooms']), str(features['RentOrSale']), dataset=data)
+                features['propertyType'].loc[0], features['locality'].loc[0], features['furnishing'].loc[0],
+                features['city'].loc[0], features['bedrooms'].loc[0], features['bathrooms'].loc[0], features['RentOrSale'].loc[0], dataset=data)
 
+            # similar_houses = recommend.get_similar_houses(
+            #     str(features['propertyType']), str(
+            #         features['locality']), str(features['furnishing']),
+            #     str(features['city']), str(features['bedrooms']), str(features['bathrooms']), str(features['RentOrSale']), dataset=data)
+            # similar_houses = recommend.get_similar_houses(
+            #     'Multistorey Apartment',  'Narendrapur',  'Semi-Furnished', 'Kolkata',  '3', '3',   'Rent', data, n=6)
+            # pass
             return similar_houses
 
         except Exception as e:
