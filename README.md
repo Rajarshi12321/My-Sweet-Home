@@ -14,7 +14,7 @@ Welcome to the My Sweet Home repository, which is a House Price Prediction and P
   - [Contributing](#contributing)
   - [License](#license)
 
-## Images and Videos
+## Images
 
 Inputing Features :
 ![image](https://github.com/Rajarshi12321/Housing_predict_recommend/assets/94736350/2a1f9fff-bf1e-4533-9090-58db6502445d)
