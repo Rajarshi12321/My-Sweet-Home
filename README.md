@@ -173,9 +173,11 @@ To run this project locally, please follow these steps:-
 
 
 ## Usage
-1. **House Price Prediction:** On the app's homepage, users can input the specific features of the house they are interested in. After submitting the details, the app will process the information and display the predicted price for the house.
+1. **House Price Prediction:** On the app's homepage, users can input the specific features of the house they are interested in. After submitting the details, the app will process the information and display the predicted price for the house.<br />
+When predicting the accuracy of housing properties for **sale**, it is approximately **90%**, whereas for **rental** properties, it is about **70%**.
 
-2. **Property Recommendation:** Along with the house price predictions users will also get similar recommendation. The app will provide a list of 6 most similar properties that match the given criteria.
+3. **Property Recommendation:** Along with the house price predictions users will also get similar recommendations.<br />
+The app will provide a list of 6 most similar properties that match the given criteria and also show the average percentage of cosine-similarity for those 6 recommended properties.
 
 ## Contributing
 I welcome contributions to improve the functionality and performance of the app. If you'd like to contribute, please follow these guidelines:
