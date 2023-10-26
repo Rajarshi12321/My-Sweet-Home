@@ -85,7 +85,7 @@ def home():
 
         result = predict_recommend_pipeline.predict(pred_df)
 
-        logging.info(f"{result} Prediction Result")
+        # logging.info(f"{result} Prediction Result")
 
         print("after Prediction")
         print(pred_df, "DataFrame")
@@ -100,8 +100,8 @@ def home():
         # img_pipeline = ImageScrappingPipeline
         # recommend = img_pipeline.get_images(recommend)
 
-        logging.info(
-            f" {recommend} Recommended properties with {similarity} % similarity")
+        # logging.info(
+        #     f" {recommend} Recommended properties with {similarity} % similarity")
 
         print(recommend)
 
