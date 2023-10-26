@@ -12,6 +12,7 @@ app = Flask(__name__)
 path = "city_locality.npy"
 city_loc = np.load(path)
 
+
 # Function to get unique cities
 
 propType = ['Multistorey Apartment', 'Residential House',
@@ -109,4 +110,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", threaded=True, debug=True)
+    app.run(host="0.0.0.0")
