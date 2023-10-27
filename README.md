@@ -145,7 +145,7 @@ To run this project locally, please follow these steps:-
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/Rajarshi12321/Housing_predict_recommend
+   git clone https://github.com/Rajarshi12321/My-Sweet-Home.git
    ```
 
 
