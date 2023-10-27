@@ -152,13 +152,13 @@ To run this project locally, please follow these steps:-
 2. Activating the env
   
     ```shell
-    conda activate <your-env-name> 
+   conda activate <your-env-name> 
     ```
 
 3. Install the required dependencies by running:
    ```shell
-    pip install -r requirements.txt.
-    ``` 
+   pip install -r requirements.txt
+   ``` 
    Ensure you have Python installed on your system (Python 3.9 or higher is recommended).<br />
    Once the dependencies are installed, you're ready to use the project.
 
@@ -166,8 +166,8 @@ To run this project locally, please follow these steps:-
 
 4. Run the Flask app: Execute the following code in your terminal.
    ```shell  
-    python app.py 
-    ```
+   python app.py 
+   ```
    
 
 6. Access the app: Open your web browser and navigate to http://127.0.0.1:5000/ to use the House Price Prediction and Property Recommendation app.
