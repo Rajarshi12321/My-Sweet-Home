@@ -4,14 +4,9 @@
 ; !model_rent.pkl
 ; !preprocessor.pkl
 ; !recommend_data.csv
-; !src
-; !static
-; !templates
-; !.gitignore
-; !app.py
-; !city_locality.npy
-; !LICENSE
-; !main.py
-; !README.md
-; !requirements.txt
-; !setup.py
+!src
+!static
+!templates
+!app.py
+!city_locality.npy
+!requirements.txt
