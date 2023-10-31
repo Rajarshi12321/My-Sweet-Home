@@ -1,17 +1,17 @@
 # Ignore everything (folders and files) on root only
 /*
-!model.pkl
-!model_rent.pkl
-!preprocessor.pkl
-!recommend_data.csv
-!src
-!static
-!templates
-!.gitignore
-!app.py
-!city_locality.npy
-!LICENSE
-!main.py
-!README.md
-!requirements.txt
-!setup.py
+; !model.pkl
+; !model_rent.pkl
+; !preprocessor.pkl
+; !recommend_data.csv
+; !src
+; !static
+; !templates
+; !.gitignore
+; !app.py
+; !city_locality.npy
+; !LICENSE
+; !main.py
+; !README.md
+; !requirements.txt
+; !setup.py
