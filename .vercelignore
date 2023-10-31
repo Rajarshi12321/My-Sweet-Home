@@ -4,9 +4,9 @@
 ; !model_rent.pkl
 ; !preprocessor.pkl
 ; !recommend_data.csv
-!src
+; !src
 !static
 !templates
 !app.py
-!city_locality.npy
+; !city_locality.npy
 !requirements.txt
