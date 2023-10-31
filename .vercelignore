@@ -5,7 +5,7 @@
 ; !preprocessor.pkl
 ; !recommend_data.csv
 ; !src
-!static
+; !static
 !templates
 !app.py
 ; !city_locality.npy
