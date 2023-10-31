@@ -164,4 +164,3 @@ cython_debug/
 .vercel
 logs
 catboost_info
-catboost_info
