@@ -6,6 +6,7 @@
 ; !recommend_data.csv
 ; !src
 ; !static
+!api/
 !templates
 !app.py
 ; !city_locality.npy
