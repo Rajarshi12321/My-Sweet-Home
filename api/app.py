@@ -5,6 +5,7 @@ from src.pipeline.predict_pipeline import CustomData, PredictRecommendPipeline
 from src.pipeline.scraping_pipeline import ImageScrappingPipeline
 from math import trunc
 from src.logger import logging
+import os
 
 app = Flask(__name__)
 
