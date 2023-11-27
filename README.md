@@ -18,9 +18,9 @@ Welcome to the My Sweet Home repository, which is a House Price Prediction and P
 
 ## About the Data
 
-The dataset The goal is to predict the price of a given Housing Property (Regression Analysis) and also to recommend 6 similar Housing Properties (Content-Based Filtering).
+The goal is to predict the price of a given Housing Property (Regression Analysis) and also to recommend 6 similar Housing Properties (Content-Based Filtering).
 
-There are 7 independent variables in the raw data, I am here explaining only the important features used for feature engineering and model prediction. (To make the task easier I have joined bedroom and bathroom feature as BHK for model prediction and recommendation, Although You can modify it as you like):
+There are 70 independent variables in the raw data, I am here explaining only the important features ( 7 features ) used for feature engineering and model prediction. (To make the task easier I have joined bedroom and bathroom feature as BHK for model prediction and recommendation, Although You can modify it as you like):
 
  - propertyType: The type or category of the house or property (e.g., apartment, villa, commercial).
 
@@ -41,10 +41,10 @@ There are 7 independent variables in the raw data, I am here explaining only the
 - exactPrice : The exact price of the house or property.
   
 
-Dataset Source Link : ```https://www.kaggle.com/datasets/rajarshiroy0123/house-prices-in-india-2023```
+Dataset Source Link : [https://www.kaggle.com/datasets/rajarshiroy0123/house-prices-in-india-2023](https://www.kaggle.com/datasets/rajarshiroy0123/house-prices-in-india-2023)
 
-To understand about the feature engineering and model prediction for this particular dataset please refer to the following:
-Kaggle Notebook : ```https://www.kaggle.com/code/rajarshiroy0123/indian-house-price-prediction```
+To understand about the feature engineering and model prediction for this particular dataset please refer to the following: </br>
+Kaggle Notebook : [https://www.kaggle.com/code/rajarshiroy0123/indian-house-price-prediction](https://www.kaggle.com/code/rajarshiroy0123/indian-house-price-prediction)
 
 
 ## Table of Contents
@@ -54,7 +54,7 @@ Kaggle Notebook : ```https://www.kaggle.com/code/rajarshiroy0123/indian-house-pr
   - [About the Data](#about-the-data)
     - [Target variable:](#target-variable)
   - [Table of Contents](#table-of-contents)
-  - [Images and Videos](#images-and-videos)
+  - [Images](#images)
   - [Installation and Dependencies](#installation-and-dependencies)
   - [Working Directory](#working-directory)
   - [Working with the code](#working-with-the-code)
@@ -63,7 +63,7 @@ Kaggle Notebook : ```https://www.kaggle.com/code/rajarshiroy0123/indian-house-pr
   - [Contact](#contact)
   - [License](#license)
 
-## Images and Videos
+## Images 
 
 Inputing Features :
 ![image](https://github.com/Rajarshi12321/Housing_predict_recommend/assets/94736350/2a1f9fff-bf1e-4533-9090-58db6502445d)
@@ -212,7 +212,7 @@ To run this project locally, please follow these steps:-
 
 (Additional Functionality)
 
-1. You can use your own data and form the datasets as per your liking using the pipelines, Change the source of the dataset in data ingestion pipeline in the file directory `src\components\data_ingestion.py`
+1. You can use your own data and form the datasets as per your liking using the pipelines, Change the source of the dataset in data ingestion pipeline in the file directory `src/components/data_ingestion.py`
 2. Run the following codes to make your clean, proprocess and make model based on your date (Modify the pre processing pipleline and model making pipeline based on your required result for your project)
    ```shell
    python src/components/data_ingestion.py
