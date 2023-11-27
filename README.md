@@ -62,6 +62,7 @@ Kaggle Notebook : [https://www.kaggle.com/code/rajarshiroy0123/indian-house-pric
   - [Contributing](#contributing)
   - [Contact](#contact)
   - [License](#license)
+  - [Reference](#reference)
 
 ## Images 
 
@@ -251,4 +252,8 @@ Rajarshi Roy - [royrajarshi0123@gmail.com](mailto:royrajarshi0123@gmail.com)
 This project is licensed under the MIT License. Feel free to modify and distribute it as per the terms of the license.
 
 I hope this README provides you with the necessary information to get started with the Housing Price Prediction and Recommending project. 
+
+## Reference
+
+I took reference from Krish Naik sir's [YouTube Playlist](https://youtube.com/playlist?list=PLZoTAELRMXVPS-dOaVbAux22vzqdgoGhG&si=WpPn00reSU9yYZzc).
 
