@@ -95,9 +95,6 @@ def home():
 
         recommend = predict_recommend_pipeline.recommend(pred_df)
 
-        pred_df.to_csv('pred_df.csv')
-        recommend.to_csv('recommend.csv')
-
         similarity = (recommend["distances"].mean())*100
         similarity = trunc(similarity)
         similarity = str(similarity)+"%"
