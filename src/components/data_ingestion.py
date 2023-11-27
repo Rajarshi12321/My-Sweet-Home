@@ -22,6 +22,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:
+            # Here add the source of your raw data
             df = pd.read_csv("NOTEBOOK/DATA/Scraped_Data.csv")
             logging.info("Read the dataset as dataframe")
 

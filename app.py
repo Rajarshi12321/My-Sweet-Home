@@ -95,6 +95,9 @@ def home():
 
         recommend = predict_recommend_pipeline.recommend(pred_df)
 
+        pred_df.to_csv('pred_df.csv')
+        recommend.to_csv('recommend.csv')
+
         similarity = (recommend["distances"].mean())*100
         similarity = trunc(similarity)
         similarity = str(similarity)+"%"
@@ -111,4 +114,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True, port=5000)
