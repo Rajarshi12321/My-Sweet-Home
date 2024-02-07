@@ -181,12 +181,21 @@ To run this project locally, please follow these steps:-
      ```shell
      conda create -p <Environment_Name> python==<python version> -y
      ```
+     Example:
+     ```shell
+     conda create -n housing python=3.8 -y 
+     ```
+
 
 3. **Activate the Virtual Environment** (Optional)
    Activate the virtual environment based on your operating system:
       ```shell
       conda activate <Environment_Name>/
       ```
+      Example:
+     ```shell
+     conda activate housing 
+     ```
 
 4. **Install Dependencies**
    - Navigate to the project directory:
