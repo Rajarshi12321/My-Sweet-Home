@@ -1,7 +1,10 @@
-import os
+import mlflow
+import mlflow.sklearn
+from urllib.parse import urlparse
+
 import sys
 from dataclasses import dataclass
-import numpy as np
+import pandas as pd
 # from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
@@ -11,7 +14,7 @@ from sklearn.ensemble import (
 from sklearn.model_selection import train_test_split
 
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score, mean_absolute_error
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
@@ -21,19 +24,16 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object, evaluate_models, remove_outliers_iqr
-
-
-@dataclass
-class ModelTrainerConfig:
-    trained_model_file_path = os.path.join("artifacts", "model.pkl")
-    trained_model_file_path_rent = os.path.join("artifacts", "model_rent.pkl")
+from HousePricePredictRecommend.entity.config_entity import TrainingConfig
 
 
 class ModelTrainer:
-    def __init__(self):
-        self.model_trainer_config = ModelTrainerConfig()
+    def __init__(self, config: TrainingConfig):
+        self.config = config
 
-    def initiate_model_trainer(self, DF):
+    def initiate_model_trainer(self):
+        DF = pd.read_csv(self.config.training_data)
+
         imp_feature = ['propertyType',
                        'locality',
                        'furnishing',
@@ -49,53 +49,31 @@ class ModelTrainer:
                 DF[imp_feature], DF[["exactPrice"]], test_size=0.33, random_state=42)
 
             models = {
-                "Random Forest": RandomForestRegressor(),
-                "Decision Tree": DecisionTreeRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
-                "Linear Regression": LinearRegression(),
+                "RandomForest": RandomForestRegressor(),
+                "DecisionTree": DecisionTreeRegressor(),
+                "GradientBoosting": GradientBoostingRegressor(),
+                "LinearRegression": LinearRegression(),
                 "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
+                "CatBoostingRegressor": CatBoostRegressor(verbose=False),
 
-                "AdaBoost Regressor": AdaBoostRegressor(),
+                "AdaBoostRegressor": AdaBoostRegressor(),
             }
-            params = {
-                "Decision Tree": {
-                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                    # 'splitter':['best','random'],
-                    # 'max_features':['sqrt','log2'],
-                },
-                "Random Forest": {
-                    # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+            print("OKK 1")
 
-                    # 'max_features':['sqrt','log2',None],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "Gradient Boosting": {
-                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
-                    'learning_rate': [.1, .01, .05, .001],
-                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9],
-                    # 'criterion':['squared_error', 'friedman_mse'],
-                    # 'max_features':['auto','sqrt','log2'],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "Linear Regression": {},
-                "XGBRegressor": {
-                    'learning_rate': [.1, .01, .05, .001],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "CatBoosting Regressor": {},
+            params = self.config.model_params
+            print(params.MODELS)
+            print("OKK 2")
+            models = {key: value for key,
+                      value in models.items() if key in params.MODELS}
+            print(models)
 
-                "AdaBoost Regressor": {
-                    'learning_rate': [.1, .01, 0.5, .001],
-                    # 'loss':['linear','square','exponential'],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                }
+            print("OKK 3")
 
-            }
-
-            model_report: dict = evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                                                 models=models, param=params)
+            model_report, parameters = evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
+                                                       models=models, param=params.MODELS)
+            print("OKK 4")
             logging.info(f"models -> {model_report}")
+
             # To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
 
@@ -112,7 +90,7 @@ class ModelTrainer:
                 f"Best found model on both training and testing dataset")
 
             save_object(
-                file_path=self.model_trainer_config.trained_model_file_path,
+                file_path=self.config.trained_model_file_path,
                 obj=best_model
             )
 
@@ -121,12 +99,19 @@ class ModelTrainer:
             r2_square = r2_score(y_test, predicted)
             mae = mean_absolute_error(y_test, predicted)
             print(mae)
-            return r2_square
+
+            # Log into MLflow
+            self.log_model_into_mlflow(
+                model_report, parameters, y_test, predicted, "Full Data Model")
+
+            return model_report
 
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_model_trainer_rent(self, DF):
+    def initiate_model_trainer_rent(self):
+        DF = pd.read_csv(self.config.training_data)
+
         imp_feature = ['propertyType',
                        'locality',
                        'furnishing',
@@ -142,54 +127,33 @@ class ModelTrainer:
             logging.info("Split training and test input data")
             X_train, X_test, y_train, y_test = train_test_split(
                 DF[imp_feature], DF[["exactPrice"]], test_size=0.33, random_state=42)
+
             models = {
-                "Random Forest": RandomForestRegressor(),
-                "Decision Tree": DecisionTreeRegressor(),
-                "Gradient Boosting": GradientBoostingRegressor(),
-                "Linear Regression": LinearRegression(),
+                "RandomForest": RandomForestRegressor(),
+                "DecisionTree": DecisionTreeRegressor(),
+                "GradientBoosting": GradientBoostingRegressor(),
+                "LinearRegression": LinearRegression(),
                 "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
+                "CatBoostingRegressor": CatBoostRegressor(verbose=False),
 
-                "AdaBoost Regressor": AdaBoostRegressor(),
+                "AdaBoostRegressor": AdaBoostRegressor(),
             }
-            params = {
-                "Decision Tree": {
-                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                    # 'splitter':['best','random'],
-                    # 'max_features':['sqrt','log2'],
-                },
-                "Random Forest": {
-                    # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+            print("OKK 1")
 
-                    # 'max_features':['sqrt','log2',None],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "Gradient Boosting": {
-                    # 'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
-                    'learning_rate': [.1, .01, .05, .001],
-                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9],
-                    # 'criterion':['squared_error', 'friedman_mse'],
-                    # 'max_features':['auto','sqrt','log2'],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "Linear Regression": {},
-                "XGBRegressor": {
-                    'learning_rate': [.1, .01, .05, .001],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                },
-                "CatBoosting Regressor": {},
+            params = self.config.model_params
+            print(params.MODELS)
+            print("OKK 2")
+            models = {key: value for key,
+                      value in models.items() if key in params.MODELS}
+            print(models)
 
-                "AdaBoost Regressor": {
-                    'learning_rate': [.1, .01, 0.5, .001],
-                    # 'loss':['linear','square','exponential'],
-                    'n_estimators': [8, 16, 32, 64, 128, 256]
-                }
+            print("OKK 3")
 
-            }
-
-            model_report: dict = evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
-                                                 models=models, param=params)
+            model_report, parameters = evaluate_models(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
+                                                       models=models, param=params.MODELS)
+            print("OKK 4")
             logging.info(f"models -> {model_report}")
+
             # To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
 
@@ -200,13 +164,13 @@ class ModelTrainer:
             ]
             best_model = models[best_model_name]
 
-            if best_model_score < 0.6:
+            if best_model_score < 0.3:
                 raise CustomException("No best model found")
             logging.info(
                 f"Best found model on both training and testing dataset")
 
             save_object(
-                file_path=self.model_trainer_config.trained_model_file_path_rent,
+                file_path=self.config.trained_model_file_path,
                 obj=best_model
             )
 
@@ -215,7 +179,56 @@ class ModelTrainer:
             r2_square = r2_score(y_test, predicted)
             mae = mean_absolute_error(y_test, predicted)
             print(mae)
-            return r2_square
+
+            # Log into MLflow
+            # with mlflow.start_run(run_name="Rent Data Model"):
+            #     for model_name, model in model_report.items():
+            #         mlflow.log_params(parameters)  # Log model parameters
+            #         mlflow.log_metric("mean_squared_error", mean_squared_error(y_test, predicted))  # Log MSE
+            #         mlflow.log_metric("mean_absolute_error", mean_absolute_error(y_test, predicted))  # Log MSE
+            #         mlflow.log_metric("r2_score", r2_score(y_test, predicted))  # Log R2 Score
+            #         mlflow.sklearn.log_model(model, f"{model_name}_model")  # Log the trained model
+
+            #         # Model registry does not work with file store
+            #         if tracking_url_type_store != "file":
+
+            #             # Register the model
+            #             # There are other ways to use the Model Registry, which depends on the use case,
+            #             # please refer to the doc for more information:
+            #             # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            #             mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
+            #         else:
+            #             mlflow.keras.log_model(self.model, "model")
+
+            self.log_model_into_mlflow(
+                model_report, parameters, y_test, predicted, "Rent Data Model")
+
+            return model_report
 
         except Exception as e:
             raise CustomException(e, sys)
+
+    def log_model_into_mlflow(self, model_report, parameters, y_test, predicted, run_name):
+        mlflow.set_registry_uri(self.config.mlflow_uri)
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+
+        with mlflow.start_run(run_name=run_name):
+            for model_name, model in model_report.items():
+                mlflow.log_params(parameters)  # Log model parameters
+                mlflow.log_metric("mean_squared_error", mean_squared_error(
+                    y_test, predicted))  # Log MSE
+                mlflow.log_metric("mean_absolute_error", mean_absolute_error(
+                    y_test, predicted))  # Log MSE
+                mlflow.log_metric("r2_score", r2_score(
+                    y_test, predicted))  # Log R2 Score
+
+                # Model registry does not work with file store
+                if tracking_url_type_store != "file":
+                    # Register the model
+                    # There are other ways to use the Model Registry, which depends on the use case,
+                    # please refer to the doc for more information:
+                    # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+                    mlflow.sklearn.log_model(
+                        model, f"{model_name}_model", registered_model_name=model_name)
+                else:
+                    mlflow.sklearn.log_model(model, f"{model_name}_model")

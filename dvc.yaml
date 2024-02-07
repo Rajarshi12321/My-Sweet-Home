@@ -1,0 +1,34 @@
+stages:
+  data_ingestion:
+    cmd: python src/HousePricePredictRecommend/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/HousePricePredictRecommend/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/Dataset.csv
+      - artifacts/data_ingestion/data.zip
+
+  data_transformation:
+    cmd: python src/HousePricePredictRecommend/pipeline/stage_02_data_transformation.py
+    deps:
+      - src/HousePricePredictRecommend/pipeline/stage_02_data_transformation.py
+      - config/config.yaml
+      - artifacts/data_ingestion/data.zip
+    
+    outs:
+      - artifacts/processed_data.csv
+      - artifacts/data_preprocessing/preprocessor.h5
+
+
+  training:
+    cmd: python src/HousePricePredictRecommend/pipeline/stage_03_model_training_evaluation_mlflow.py
+    deps:
+      - src/HousePricePredictRecommend/pipeline/stage_03_model_training_evaluation_mlflow.py
+      - config/config.yaml
+      - artifacts/processed_data.csv
+      - params.yaml
+    
+    outs:
+      - artifacts/training/model.h5
+      - artifacts/training/model_rent.h5
+

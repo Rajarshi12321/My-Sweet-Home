@@ -171,4 +171,9 @@ artifacts/*
 artifact/
 *.csv
 
+# dvc
+.dvc
+dvc.lock
+mlruns/
+
 

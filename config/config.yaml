@@ -15,7 +15,9 @@ data_preprocessing:
 
 
 
-
 training:
   root_dir: artifacts/training
-  trained_model_path: artifacts/training/model.h5
+  training_data: artifacts/processed_data.csv
+  trained_model_file_path: artifacts/training/model.h5
+  trained_model_file_path_rent: artifacts/training/model_rent.h5
+  mlflow_uri: https://dagshub.com/Rajarshi12321/My-Sweet-Home.mlflow

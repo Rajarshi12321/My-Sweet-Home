@@ -67,6 +67,9 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     try:
         report = {}
 
+        print(models)
+        print(param, "utils")
+
         for i in range(len(list(models))):
             model = list(models.values())[i]
             para = param[list(models.keys())[i]]
@@ -90,7 +93,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
             report[list(models.keys())[i]] = test_model_score
 
         logging.info(f"utils model trainer : {report} , { model.get_params()}")
-        return report
+        return report, model.get_params()
 
     except Exception as e:
         raise CustomException(e, sys)

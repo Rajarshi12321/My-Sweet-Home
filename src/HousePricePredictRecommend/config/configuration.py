@@ -1,6 +1,6 @@
 from HousePricePredictRecommend.constants import *
 from HousePricePredictRecommend.utils.common import read_yaml, create_directories
-from HousePricePredictRecommend.entity.config_entity import DataIngestionConfig, DataTransformationConfig
+from HousePricePredictRecommend.entity.config_entity import DataIngestionConfig, DataTransformationConfig, TrainingConfig
 
 
 class ConfigurationManager:
@@ -40,3 +40,20 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+
+    def get_model_training_config(self) -> TrainingConfig:
+        config = self.config.training
+
+        create_directories([config.root_dir])
+
+        model_training_config = TrainingConfig(
+            root_dir=config.root_dir,
+            training_data=config.training_data,
+            trained_model_file_path=config.trained_model_file_path,
+            trained_model_file_path_rent=config.trained_model_file_path_rent,
+            mlflow_uri=config.mlflow_uri,
+            model_params=self.params
+
+        )
+
+        return model_training_config
