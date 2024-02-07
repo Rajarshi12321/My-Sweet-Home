@@ -2,9 +2,9 @@ import sys
 import pandas as pd
 import numpy as np
 import math
-from src.exception import CustomException
-from src.utils import load_object, output_within_range
-from src.recommender.house_recommender import Recommender
+from HousePricePredictRecommend.utils.exception import CustomException
+from HousePricePredictRecommend.utils.common import load_object, output_within_range
+from HousePricePredictRecommend.recommender.house_recommender import Recommender
 
 
 class PredictRecommendPipeline:

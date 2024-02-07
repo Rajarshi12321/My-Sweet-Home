@@ -7,11 +7,11 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 
 
-from src.exception import CustomException
-from src.logger import logging
-from src.utils import DropNaTransformer, DateTransformTransformer, FillnaTransformer, ReplaceValueTransformer, save_object
+from HousePricePredictRecommend.utils.exception import CustomException
+from HousePricePredictRecommend import logging
+from HousePricePredictRecommend.utils.common import DropNaTransformer, DateTransformTransformer, FillnaTransformer, ReplaceValueTransformer, save_object
 import os
-from src.utils import save_object
+from HousePricePredictRecommend.utils.common import save_object
 
 
 @dataclass

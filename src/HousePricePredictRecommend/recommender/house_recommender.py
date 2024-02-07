@@ -1,4 +1,4 @@
-from src.recommender.data_transformation_recommend import DataTransformationRecommend
+from HousePricePredictRecommend.recommender.data_transformation_recommend import DataTransformationRecommend
 import os
 import sys
 from dataclasses import dataclass
@@ -7,8 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd
 
-from src.exception import CustomException
-from src.logger import logging
+from HousePricePredictRecommend.utils.exception import CustomException
+from HousePricePredictRecommend import logging
 
 
 class Recommender:

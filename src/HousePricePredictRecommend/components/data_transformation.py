@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from src.exception import CustomException
-from src.logger import logging
-from src.utils import DropNaTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer
+from HousePricePredictRecommend.utils.exception import CustomException
+from HousePricePredictRecommend import logging
+from HousePricePredictRecommend.utils.common import DropNaTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer
 
 
 class DataTransformation:

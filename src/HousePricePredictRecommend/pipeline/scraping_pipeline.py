@@ -1,7 +1,7 @@
 import requests
 import sys
 from bs4 import BeautifulSoup
-from src.exception import CustomException
+from HousePricePredictRecommend.utils.exception import CustomException
 
 
 class ImageScrappingPipeline:

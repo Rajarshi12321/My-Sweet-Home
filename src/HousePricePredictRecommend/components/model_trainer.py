@@ -20,10 +20,10 @@ from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
 from catboost import CatBoostRegressor
 
-from src.exception import CustomException
-from src.logger import logging
+from HousePricePredictRecommend.utils.exception import CustomException
+from HousePricePredictRecommend import logging
 
-from src.utils import save_object, evaluate_models, remove_outliers_iqr
+from HousePricePredictRecommend.utils.common import save_object, evaluate_models, remove_outliers_iqr
 from HousePricePredictRecommend.entity.config_entity import TrainingConfig
 
 
@@ -170,7 +170,7 @@ class ModelTrainer:
                 f"Best found model on both training and testing dataset")
 
             save_object(
-                file_path=self.config.trained_model_file_path,
+                file_path=self.config.trained_model_file_path_rent,
                 obj=best_model
             )
 

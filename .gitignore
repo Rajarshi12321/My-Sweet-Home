@@ -173,7 +173,6 @@ artifact/
 
 # dvc
 .dvc
-dvc.lock
 mlruns/
 
 
