@@ -1,29 +1,18 @@
 import sys
-from dataclasses import dataclass
-
+import joblib
+from HousePricePredictRecommend.entity.config_entity import DataTransformationConfig
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import DropNaTransformer, DateTransformTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer, save_object
-import os
-from src.utils import save_object
-
-
-@dataclass
-class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join("artifacts", "preprocessor.pkl")
+from src.utils import DropNaTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer
 
 
 class DataTransformation:
-    def __init__(self):
-        self.data_transformation_config = DataTransformationConfig()
+    def __init__(self, config: DataTransformationConfig):
+        self.config = config
 
     def get_data_transformer_object(self):
         '''
@@ -78,11 +67,12 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_data_transformation(self, raw_data_path):
+    def initiate_data_transformation(self):
         try:
-            dataset = pd.read_csv(raw_data_path)
+            dataset = pd.read_csv(self.config.dataset_path)
 
-            logging.info(f"Read raw data path {raw_data_path}")
+            logging.info(f"Read raw data path {self.config.dataset_path}")
+            logging.info("Reading preprocessor object")
             logging.info("Reading preprocessor object")
 
             preprocessing_obj = self.get_data_transformer_object()
@@ -109,17 +99,18 @@ class DataTransformation:
             # save the dataframe as a csv file
             DF.to_csv("artifacts/processed_data.csv", index=False)
 
-            save_object(
+            file_path = self.config.preprocessor_path,
+            obj = preprocessing_obj
 
-                file_path=self.data_transformation_config.preprocessor_obj_file_path,
-                obj=preprocessing_obj
-
-            )
-
-            return (
-                DF,
-                self.data_transformation_config.preprocessor_obj_file_path,
-            )
+            self.save_processor(file_path[0], obj)
 
         except Exception as e:
             raise CustomException(e, sys)
+
+    @staticmethod
+    def save_processor(file_path, processor):
+        try:
+            joblib.dump(processor, file_path)
+            logging.info(f"Processor saved successfully to {file_path}")
+        except Exception as e:
+            logging.error(f"Error occurred while saving processor: {e}")

@@ -169,5 +169,6 @@ catboost_info
 # artifacts
 artifacts/*
 artifact/
+*.csv
 
 
