@@ -58,10 +58,10 @@ class PredictRecommendPipeline:
             # print(features["RentOrSale"] == "Sale", "hiii")
 
             if (features["RentOrSale"] == "Rent").all():
-                model_path = 'artifacts/training/model.h5'
+                model_path = os.path.join("model", "model.h5")
             else:
-                model_path = 'artifacts/training/model_rent.h5'
-            preprocessor_path = "artifacts/data_preprocessing/preprocessor.h5"
+                model_path = os.path.join("model", "model_rent.h5")
+            preprocessor_path = os.path.join("preprocessor", "preprocessor.h5")
             print("Before Loading")
             model = load(model_path)
             preprocessor = load(preprocessor_path)

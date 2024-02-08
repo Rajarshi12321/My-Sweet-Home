@@ -31,8 +31,7 @@ stages:
     outs:
       - artifacts/training/model.h5
       - artifacts/training/model_rent.h5
-      - model/model.h5
-      - model/model_rent.h5
+      
  
   data_transformation_recommend:
     cmd: python src/HousePricePredictRecommend/pipeline/stage_04_data_transformation_recommend_data.py
@@ -47,5 +46,4 @@ stages:
     outs:
       - artifacts/data_preprocessed_recommend.csv
       - artifacts/recommend_data.csv
-      - recommend/recommend_data.csv
 

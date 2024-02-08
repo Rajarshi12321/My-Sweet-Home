@@ -36,7 +36,8 @@ class ConfigurationManager:
         data_transformation_config = DataTransformationConfig(
             root_dir=config.root_dir,
             dataset_path=config.dataset_path,
-            preprocessor_path=config.preprocessor_path
+            preprocessor_path=config.preprocessor_path,
+            tracked_preprocessor_path=config.tracked_preprocessor_path
         )
 
         return data_transformation_config

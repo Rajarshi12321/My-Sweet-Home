@@ -73,7 +73,6 @@ class DataTransformation:
 
             logging.info(f"Read raw data path {self.config.dataset_path}")
             logging.info("Reading preprocessor object")
-            logging.info("Reading preprocessor object")
 
             preprocessing_obj = self.get_data_transformer_object()
 
@@ -99,7 +98,15 @@ class DataTransformation:
             # save the dataframe as a csv file
             DF.to_csv("artifacts/processed_data.csv", index=False)
 
+            # Saving preprocessor in artifacts, which is untracked by git
             file_path = self.config.preprocessor_path,
+            obj = preprocessing_obj
+
+            self.save_processor(file_path[0], obj)
+
+            # Saving preprocessor in preprocessor directory, which is tracked by git
+
+            file_path = self.config.tracked_preprocessor_path,
             obj = preprocessing_obj
 
             self.save_processor(file_path[0], obj)
@@ -111,6 +118,6 @@ class DataTransformation:
     def save_processor(file_path, processor):
         try:
             joblib.dump(processor, file_path)
-            logging.info(f"Processor saved successfully to {file_path}")
+            logging.info(f"Processor saved successfully to {file_path}.h5")
         except Exception as e:
             logging.error(f"Error occurred while saving processor: {e}")

@@ -1,6 +1,8 @@
 # main.py
 import numpy as np
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS, cross_origin
+
 from HousePricePredictRecommend.pipeline.predict_recommend_pipeline import CustomData, PredictRecommendPipeline
 # from HousePricePredictRecommend.pipeline.scraping_pipeline import ImageScrappingPipeline
 from math import trunc
@@ -8,6 +10,7 @@ from HousePricePredictRecommend import logging
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 # Load city_locality data
 path = "city_locality.npy"
@@ -46,18 +49,30 @@ def main_arr(city):
 
 
 @app.route('/api/city_arr', methods=['GET'])
+@cross_origin()
 def get_city_arr():
     cities = city_arr()
     return jsonify(list(cities))
 
 
 @app.route('/api/main_arr/<selected_city>', methods=['GET'])
+@cross_origin()
 def get_main_arr(selected_city):
     localities = main_arr(selected_city)
     return jsonify(localities)
 
 
+@app.route("/train", methods=['GET', 'POST'])
+@cross_origin()
+@cross_origin()
+def trainRoute():
+    os.system("python main.py")
+    # os.system("dvc repro")
+    return "Training done successfully!"
+
+
 @app.route('/', methods=['GET', 'POST'])
+@cross_origin()
 def home():
     if request.method == "GET":
         return render_template('index.html', PropType=propType, BHK=BHK, Furnish=Furnishing, Ros=RoS)
@@ -111,4 +126,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, port=5000)
+    app.run(host="0.0.0.0", debug=True, port=8080)

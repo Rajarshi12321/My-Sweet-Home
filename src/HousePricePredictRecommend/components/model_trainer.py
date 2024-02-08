@@ -25,6 +25,24 @@ from HousePricePredictRecommend import logging
 
 from HousePricePredictRecommend.utils.common import save_object, evaluate_models, remove_outliers_iqr
 from HousePricePredictRecommend.entity.config_entity import TrainingConfig
+from dotenv import load_dotenv
+import os
+
+# This try catch block will run only while model training experiments not on production deployment
+try:
+    # Load environment variables from .env file
+    load_dotenv()
+
+    # Access environment variables
+    MLFLOW_TRACKING_URI = os.getenv('MLFLOW_TRACKING_URI')
+    MLFLOW_TRACKING_USERNAME = os.getenv('MLFLOW_TRACKING_USERNAME')
+    MLFLOW_TRACKING_PASSWORD = os.getenv('MLFLOW_TRACKING_PASSWORD')
+
+    os.environ['MLFLOW_TRACKING_URI'] = MLFLOW_TRACKING_URI
+    os.environ['MLFLOW_TRACKING_USERNAME'] = MLFLOW_TRACKING_USERNAME
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = MLFLOW_TRACKING_PASSWORD
+except:
+    pass
 
 
 class ModelTrainer:

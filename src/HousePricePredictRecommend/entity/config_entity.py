@@ -15,6 +15,7 @@ class DataTransformationConfig:
     root_dir: Path
     dataset_path: Path
     preprocessor_path: Path
+    tracked_preprocessor_path: Path
 
 
 @dataclass(frozen=True)
