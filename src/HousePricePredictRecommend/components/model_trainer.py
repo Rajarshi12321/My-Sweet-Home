@@ -12,7 +12,7 @@ from sklearn.ensemble import (
     RandomForestRegressor,
 )
 from sklearn.model_selection import train_test_split
-
+import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
@@ -65,6 +65,11 @@ class ModelTrainer:
             logging.info("Split training and test input data")
             X_train, X_test, y_train, y_test = train_test_split(
                 DF[imp_feature], DF[["exactPrice"]], test_size=0.33, random_state=42)
+
+            print(y_train)
+            # To convert y_train to required format
+            y_train = np.ravel(y_train)
+            print(y_train)
 
             models = {
                 "RandomForest": RandomForestRegressor(),
@@ -152,6 +157,11 @@ class ModelTrainer:
             logging.info("Split training and test input data")
             X_train, X_test, y_train, y_test = train_test_split(
                 DF[imp_feature], DF[["exactPrice"]], test_size=0.33, random_state=42)
+
+            print(y_train)
+            # To convert y_train to required format
+            y_train = np.ravel(y_train)
+            print(y_train)
 
             models = {
                 "RandomForest": RandomForestRegressor(),
