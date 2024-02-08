@@ -1,30 +1,21 @@
 import sys
-from dataclasses import dataclass
-
 import numpy as np
 import pandas as pd
 
 from sklearn.pipeline import Pipeline
 
-
+from HousePricePredictRecommend.entity.config_entity import DataTransformationRecommendConfig
 from HousePricePredictRecommend.utils.exception import CustomException
 from HousePricePredictRecommend import logging
 from HousePricePredictRecommend.utils.common import DropNaTransformer, DateTransformTransformer, FillnaTransformer, ReplaceValueTransformer, save_object
 import os
-from HousePricePredictRecommend.utils.common import save_object
-
-
-@dataclass
-class DataTransformationRecommendConfig:
-    preprocessor_obj_file_path = os.path.join(
-        "artifacts", "recommend_data.csv")
 
 
 class DataTransformationRecommend:
-    def __init__(self):
-        self.data_transformation_config = DataTransformationRecommendConfig()
+    def __init__(self, config: DataTransformationRecommendConfig):
+        self.config = config
 
-    def get_data_transformer_object(self, data):
+    def get_data_transformer_recommend_object(self, data):
         '''
         This is data transformation function
         '''
@@ -50,12 +41,13 @@ class DataTransformationRecommend:
 
     def initiate_data_transformation_recommend(self):
         try:
-            Data_path = "artifact/Dataset.csv"
+            Data_path = self.config.dataset_path
             Dataset = pd.read_csv(Data_path)
 
             logging.info("Reading preprocessor object")
 
-            preprocessing_obj = self.get_data_transformer_object(Dataset)
+            preprocessing_obj = self.get_data_transformer_recommend_object(
+                Dataset)
 
             data = preprocessing_obj.fit_transform(
                 Dataset)
@@ -67,8 +59,7 @@ class DataTransformationRecommend:
             dataset = pd.DataFrame(data)
 
             # save the dataframe as a csv file
-            dataset.to_csv(
-                "artifacts/data_preprocessed_recommend.csv", index=False)
+            dataset.to_csv(self.config.processed_dataset_path, index=False)
 
             combined_fea = dataset["propertyType"] + "   " + dataset["locality"] + "   " + dataset["furnishing"] + "   " + dataset["city"] + \
                 "   " + dataset["bedrooms"].astype("str") + "   " + dataset["bathrooms"].astype(
@@ -77,22 +68,15 @@ class DataTransformationRecommend:
             combined_fea_df = pd.DataFrame({"text": combined_fea, "propertyType": dataset["propertyType"], "locality": dataset[
                                            "locality"], "furnishing": dataset["furnishing"], "city": dataset["city"], "RentOrSale": dataset["RentOrSale"], "BHK": dataset["bedrooms"], "URLs": dataset["URLs"]})
 
-            combined_fea_df.to_csv('artifacts/recommend_data.csv', index=False)
+            combined_fea_df.to_csv(
+                self.config.recommend_dataset_path, index=False)
+            combined_fea_df.to_csv(
+                self.config.tracked_recommend_dataset_path, index=False)
 
             logging.info(
                 f"Saved preprocessed data for recommendation {combined_fea_df.head()}")
 
-            return (
-                combined_fea_df,
-                self.data_transformation_config.preprocessor_obj_file_path,
-            )
+            return combined_fea_df
 
         except Exception as e:
             raise CustomException(e, sys)
-
-
-if __name__ == "__main__":
-    data_transform = DataTransformationRecommend()
-
-    data, _ = data_transform.initiate_data_transformation_recommend()
-    print(data)

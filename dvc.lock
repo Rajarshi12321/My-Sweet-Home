@@ -5,8 +5,8 @@ stages:
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: d4dc4cc03cba925e705cac0ef5feb4de
-      size: 753
+      md5: b8117268f8a79fc5025b2067c0cf943c
+      size: 1068
     - path: src/HousePricePredictRecommend/pipeline/stage_01_data_ingestion.py
       hash: md5
       md5: d50b8a825fd48b379a64b32f1c245fd0
@@ -29,8 +29,8 @@ stages:
       size: 1641486
     - path: config/config.yaml
       hash: md5
-      md5: d4dc4cc03cba925e705cac0ef5feb4de
-      size: 753
+      md5: b8117268f8a79fc5025b2067c0cf943c
+      size: 1068
     - path: src/HousePricePredictRecommend/pipeline/stage_02_data_transformation.py
       hash: md5
       md5: da4122d9b93931bc105fcf7c75e758c5
@@ -54,8 +54,8 @@ stages:
       size: 1104516
     - path: config/config.yaml
       hash: md5
-      md5: d4dc4cc03cba925e705cac0ef5feb4de
-      size: 753
+      md5: b8117268f8a79fc5025b2067c0cf943c
+      size: 1068
     - path: params.yaml
       hash: md5
       md5: 31813916a7d5273cad9929e6b04f9f36
@@ -68,9 +68,51 @@ stages:
     outs:
     - path: artifacts/training/model.h5
       hash: md5
-      md5: 7d6af8d4ba4f859b5d4d1e2fd6890c35
-      size: 1255210
+      md5: 866c53a65a7a6ef2e23e927bdab17cf7
+      size: 1254346
     - path: artifacts/training/model_rent.h5
       hash: md5
-      md5: 14d3cba8bb695a3859808a5ae251bbe9
-      size: 828251
+      md5: 6bf80b72fddad4ca18d71ec810acc6f9
+      size: 831130
+    - path: model/model.h5
+      hash: md5
+      md5: 866c53a65a7a6ef2e23e927bdab17cf7
+      size: 1254346
+    - path: model/model_rent.h5
+      hash: md5
+      md5: 6bf80b72fddad4ca18d71ec810acc6f9
+      size: 831130
+  data_transformation_recommend:
+    cmd: python 
+      src/HousePricePredictRecommend/pipeline/stage_04_data_transformation_recommend_data.py
+    deps:
+    - path: artifacts/data_ingestion/Dataset.csv
+      hash: md5
+      md5: bd3611f81ee4b67196b325f5e9c11db7
+      size: 11584655
+    - path: artifacts/data_ingestion/data.zip
+      hash: md5
+      md5: f217b122f9df186f1a49c922e7aaa893
+      size: 1641486
+    - path: config/config.yaml
+      hash: md5
+      md5: b8117268f8a79fc5025b2067c0cf943c
+      size: 1068
+    - path: 
+        src/HousePricePredictRecommend/pipeline/stage_04_data_transformation_recommend_data.py
+      hash: md5
+      md5: eb8736a156befe3d51ba85eb51f1690c
+      size: 1128
+    outs:
+    - path: artifacts/data_preprocessed_recommend.csv
+      hash: md5
+      md5: 7a589084484248eb98af0e69b7b74edd
+      size: 21313096
+    - path: artifacts/recommend_data.csv
+      hash: md5
+      md5: 25d00f89f64af231c4c0f0be88e61d19
+      size: 7354254
+    - path: recommend/recommend_data.csv
+      hash: md5
+      md5: 25d00f89f64af231c4c0f0be88e61d19
+      size: 7354254

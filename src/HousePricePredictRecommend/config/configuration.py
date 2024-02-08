@@ -1,6 +1,6 @@
 from HousePricePredictRecommend.constants import *
 from HousePricePredictRecommend.utils.common import read_yaml, create_directories
-from HousePricePredictRecommend.entity.config_entity import DataIngestionConfig, DataTransformationConfig, TrainingConfig
+from HousePricePredictRecommend.entity.config_entity import DataIngestionConfig, DataTransformationConfig, TrainingConfig, DataTransformationRecommendConfig
 
 
 class ConfigurationManager:
@@ -57,3 +57,18 @@ class ConfigurationManager:
         )
 
         return model_training_config
+
+    def get_data_transformation_recommend_config(self) -> DataTransformationRecommendConfig:
+        config = self.config.recommed_data_preprocessing
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationRecommendConfig(
+            root_dir=config.root_dir,
+            dataset_path=config.dataset_path,
+            processed_dataset_path=config.processed_dataset_path,
+            recommend_dataset_path=config.recommend_dataset_path,
+            tracked_recommend_dataset_path=config.tracked_recommend_dataset_path
+        )
+
+        return data_transformation_config

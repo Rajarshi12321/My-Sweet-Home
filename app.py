@@ -1,8 +1,8 @@
 # main.py
 import numpy as np
 from flask import Flask, jsonify, request, render_template
-from HousePricePredictRecommend.pipeline.predict_pipeline import CustomData, PredictRecommendPipeline
-from HousePricePredictRecommend.pipeline.scraping_pipeline import ImageScrappingPipeline
+from HousePricePredictRecommend.pipeline.predict_recommend_pipeline import CustomData, PredictRecommendPipeline
+# from HousePricePredictRecommend.pipeline.scraping_pipeline import ImageScrappingPipeline
 from math import trunc
 from HousePricePredictRecommend import logging
 import os

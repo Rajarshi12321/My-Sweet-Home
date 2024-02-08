@@ -21,3 +21,10 @@ training:
   trained_model_file_path: artifacts/training/model.h5
   trained_model_file_path_rent: artifacts/training/model_rent.h5
   mlflow_uri: https://dagshub.com/Rajarshi12321/My-Sweet-Home.mlflow
+
+recommed_data_preprocessing:
+    root_dir: artifacts/recommed
+    dataset_path: artifacts/data_ingestion/Dataset.csv
+    processed_dataset_path: artifacts/data_preprocessed_recommend.csv
+    recommend_dataset_path: artifacts/recommend_data.csv
+    tracked_recommend_dataset_path: recommend/recommend_data.csv

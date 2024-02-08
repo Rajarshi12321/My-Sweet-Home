@@ -28,10 +28,9 @@ class TrainingConfig:
 
 
 @dataclass(frozen=True)
-class EvaluationConfig:
-    path_of_model: Path
-    training_data: Path
-    all_params: dict
-    mlflow_uri: str
-    params_image_size: list
-    params_batch_size: int
+class DataTransformationRecommendConfig:
+    root_dir: Path
+    dataset_path: Path
+    processed_dataset_path: Path
+    recommend_dataset_path: Path
+    tracked_recommend_dataset_path: Path

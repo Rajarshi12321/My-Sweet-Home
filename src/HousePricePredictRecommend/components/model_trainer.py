@@ -1,7 +1,7 @@
 import mlflow
 import mlflow.sklearn
 from urllib.parse import urlparse
-
+import os
 import sys
 from dataclasses import dataclass
 import pandas as pd
@@ -89,8 +89,15 @@ class ModelTrainer:
             logging.info(
                 f"Best found model on both training and testing dataset")
 
+            # Saving model in artifacts, which is not being tracked
             save_object(
                 file_path=self.config.trained_model_file_path,
+                obj=best_model
+            )
+
+            # Saving model in model folder, which is being tracked for the predection pipeline
+            save_object(
+                file_path=os.path.join("model", "model.h5"),
                 obj=best_model
             )
 
@@ -169,8 +176,15 @@ class ModelTrainer:
             logging.info(
                 f"Best found model on both training and testing dataset")
 
+            # Saving model in artifacts, which is not being tracked
             save_object(
                 file_path=self.config.trained_model_file_path_rent,
+                obj=best_model
+            )
+
+            # Saving model in model folder, which is being tracked for the predection pipeline
+            save_object(
+                file_path=os.path.join("model", "model_rent.h5"),
                 obj=best_model
             )
 
