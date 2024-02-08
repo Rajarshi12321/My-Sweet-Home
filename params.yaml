@@ -76,7 +76,6 @@ MODELS:
   #     - 64
   #     - 128
   #     - 256
-  # CatBoostRegressor: {}
   # AdaBoostRegressor:
   #   learning_rate:
   #     - 0.1

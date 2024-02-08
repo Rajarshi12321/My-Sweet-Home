@@ -112,7 +112,6 @@ These are some required packages for our program which are mentioned in the Requ
  ┃ ┣ 📜processed_data.csv
  ┃ ┣ 📜recommend_data.csv
  ┃ ┗ 📜testing.py
- ┣ 📂catboost_info
  ┣ 📂logs
  ┣ 📂NOTEBOOK
  ┃ ┣ 📂DATA

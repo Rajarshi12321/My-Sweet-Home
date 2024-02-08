@@ -5,7 +5,6 @@ import os
 import sys
 from dataclasses import dataclass
 import pandas as pd
-# from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     GradientBoostingRegressor,
@@ -18,7 +17,6 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
-from catboost import CatBoostRegressor
 
 from HousePricePredictRecommend.utils.exception import CustomException
 from HousePricePredictRecommend import logging
@@ -77,7 +75,6 @@ class ModelTrainer:
                 "GradientBoosting": GradientBoostingRegressor(),
                 "LinearRegression": LinearRegression(),
                 "XGBRegressor": XGBRegressor(),
-                "CatBoostingRegressor": CatBoostRegressor(verbose=False),
 
                 "AdaBoostRegressor": AdaBoostRegressor(),
             }
@@ -169,7 +166,6 @@ class ModelTrainer:
                 "GradientBoosting": GradientBoostingRegressor(),
                 "LinearRegression": LinearRegression(),
                 "XGBRegressor": XGBRegressor(),
-                "CatBoostingRegressor": CatBoostRegressor(verbose=False),
 
                 "AdaBoostRegressor": AdaBoostRegressor(),
             }
