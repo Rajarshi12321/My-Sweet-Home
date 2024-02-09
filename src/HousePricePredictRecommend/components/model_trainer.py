@@ -117,7 +117,7 @@ class ModelTrainer:
             )
 
             # Saving model in model folder, which is being tracked for the predection pipeline
-            dump(best_model, os.path.join("model", "model.h5"))
+            dump(best_model, os.path.join("model", "model.joblib"))
 
             predicted = best_model.predict(X_test)
 
@@ -205,7 +205,7 @@ class ModelTrainer:
             )
 
             # Saving model in model folder, which is being tracked for the predection pipeline
-            dump(best_model, os.path.join("model", "model_rent.h5"))
+            dump(best_model, os.path.join("model", "model_rent.joblib"))
             # dump(
             #     file_path=os.path.join("model", "model_rent.h5"),
             #     obj=best_model

@@ -58,9 +58,9 @@ class PredictRecommendPipeline:
             # print(features["RentOrSale"] == "Sale", "hiii")
 
             if (features["RentOrSale"] == "Rent").all():
-                model_path = os.path.join("model", "model.h5")
+                model_path = os.path.join("model", "model.joblib")
             else:
-                model_path = os.path.join("model", "model_rent.h5")
+                model_path = os.path.join("model", "model_rent.joblib")
             preprocessor_path = os.path.join("preprocessor", "preprocessor.h5")
             print("Before Loading")
             print(model_path, "model path")
@@ -171,13 +171,13 @@ if __name__ == "__main__":
 
     # Load the modelmodel = load_model(os.path.join("model", "model.h5"))
 
-    model = load(os.path.join("artifacts", "training", "model.h5"))
-    print("HI", os.path.join("artifacts", "training", "model_rent.h5"))
+    model = load(os.path.join("model", "model.joblib"))
+    print("HI", os.path.join("model", "model_rent.joblib"))
 
     print(model.get_params())
     print(model)
 
-    pro = load("artifacts/data_preprocessing/preprocessor.h5")
+    pro = load("preprocessor/preprocessor.h5")
 
     predict_pipeline = PredictRecommendPipeline()
 
