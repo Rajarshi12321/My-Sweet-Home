@@ -1,4 +1,5 @@
-# main.py
+# app.py
+import json
 import numpy as np
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
@@ -12,9 +13,14 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Load city_locality data
-path = "city_locality.npy"
-city_loc = np.load(path, allow_pickle=True)
+# # Load city_locality data
+# path = "city_locality.npy"
+# city_loc = np.load(path, allow_pickle=True)
+
+
+# Load the JSON data from city_loc.json
+with open('city_loc.json', 'r') as json_file:
+    city_loc = json.load(json_file)
 
 
 # Function to get unique cities
@@ -31,20 +37,31 @@ Furnishing = ['Semi-Furnished', 'Furnished', 'Unfurnished']
 
 
 def city_arr():
-    city_set = set()
-    for ele in city_loc:
-        city_set.add(ele[0])
+    # Retrieve the city names as an array directly from the keys of the JSON data
+    city_names = list(city_loc.keys())
+    return city_names
 
-    return city_set
 
 # Function to get localities for a given city
 
 
+# def main_arr(city):
+#     loc_set = set()
+#     for i in city_loc:
+#         if i[0] == city and i[1] != "Missing":
+#             loc_set.add(i[1])
+#     return list(loc_set)
+
+
+# Function to get localities for a given city
 def main_arr(city):
     loc_set = set()
-    for i in city_loc:
-        if i[0] == city and i[1] != "Missing":
-            loc_set.add(i[1])
+    # Check if the city exists in the JSON data
+    if city in city_loc:
+        # Iterate through the localities of the given city
+        for place in city_loc[city]:
+            if place != "Missing":
+                loc_set.add(place)
     return list(loc_set)
 
 
