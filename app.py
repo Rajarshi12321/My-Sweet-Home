@@ -14,7 +14,7 @@ CORS(app)
 
 # Load city_locality data
 path = "city_locality.npy"
-city_loc = np.load(path)
+city_loc = np.load(path, allow_pickle=True)
 
 
 # Function to get unique cities
