@@ -63,7 +63,13 @@ class PredictRecommendPipeline:
                 model_path = os.path.join("model", "model_rent.h5")
             preprocessor_path = os.path.join("preprocessor", "preprocessor.h5")
             print("Before Loading")
+            print(model_path, "model path")
             model = load(model_path)
+            ##
+            model_path = "model/model.h5"
+            model = load(model_path)
+            print("Working")
+
             preprocessor = load(preprocessor_path)
             print("After Loading")
             fea_df = pd.DataFrame(features, columns=['propertyType', 'locality', 'furnishing',
