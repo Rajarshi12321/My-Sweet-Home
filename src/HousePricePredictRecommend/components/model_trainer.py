@@ -17,6 +17,7 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
+from joblib import dump
 
 from HousePricePredictRecommend.utils.exception import CustomException
 from HousePricePredictRecommend import logging
@@ -116,10 +117,7 @@ class ModelTrainer:
             )
 
             # Saving model in model folder, which is being tracked for the predection pipeline
-            save_object(
-                file_path=os.path.join("model", "model.h5"),
-                obj=best_model
-            )
+            dump(best_model, os.path.join("model", "model.h5"))
 
             predicted = best_model.predict(X_test)
 
@@ -207,10 +205,11 @@ class ModelTrainer:
             )
 
             # Saving model in model folder, which is being tracked for the predection pipeline
-            save_object(
-                file_path=os.path.join("model", "model_rent.h5"),
-                obj=best_model
-            )
+            dump(best_model, os.path.join("model", "model_rent.h5"))
+            # dump(
+            #     file_path=os.path.join("model", "model_rent.h5"),
+            #     obj=best_model
+            # )
 
             predicted = best_model.predict(X_test)
 

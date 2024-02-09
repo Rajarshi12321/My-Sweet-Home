@@ -66,9 +66,9 @@ class PredictRecommendPipeline:
             print(model_path, "model path")
             model = load(model_path)
             ##
-            model_path = "model/model.h5"
-            model = load(model_path)
-            print("Working")
+            # model_path = "model/model.h5"
+            # model = load(model_path)
+            # print("Working")
 
             preprocessor = load(preprocessor_path)
             print("After Loading")
