@@ -84,8 +84,9 @@ class PredictRecommendPipeline:
 
     def recommend(self, features):
         try:
-            Data_path = "artifacts/recommend_data.csv"
+            Data_path = os.path.join("recommend", "recommend_data.csv")
             data = pd.read_csv(Data_path)
+            print(Data_path, "Sucessfullry loaded recommend_data")
 
             recommend = Recommender
             similar_houses = recommend.get_similar_houses(
