@@ -59,7 +59,8 @@ class PredictRecommendPipeline:
                 model_path = os.path.join("model", "model.pkl")
             else:
                 model_path = os.path.join("model", "model_rent.pkl")
-            preprocessor_path = os.path.join("preprocessor", "preprocessor.h5")
+            preprocessor_path = os.path.join(
+                "preprocessor", "preprocessor.pkl")
             print("Before Loading")
             print(model_path, "model path")
             model = load_object(model_path)
@@ -175,7 +176,7 @@ if __name__ == "__main__":
     print(model.get_params())
     print(model)
 
-    pro = load_object("preprocessor/preprocessor.h5")
+    pro = load_object("preprocessor/preprocessor.pkl")
 
     predict_pipeline = PredictRecommendPipeline()
 

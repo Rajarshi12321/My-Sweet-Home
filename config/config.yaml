@@ -12,7 +12,7 @@ data_preprocessing:
   root_dir: artifacts/data_preprocessing
   dataset_path: artifacts/data_ingestion/Dataset.csv
   preprocessor_path: artifacts/data_preprocessing/preprocessor.h5
-  tracked_preprocessor_path: preprocessor/preprocessor.h5
+  tracked_preprocessor_path: preprocessor/preprocessor.pkl
 
 
 
