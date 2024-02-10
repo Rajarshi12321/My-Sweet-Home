@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from HousePricePredictRecommend.utils.exception import CustomException
 from HousePricePredictRecommend import logging
-from HousePricePredictRecommend.utils.common import DropNaTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer
+from HousePricePredictRecommend.utils.common import DropNaTransformer, FillnaTransformer, CategoricalLabelTransformer, ReplaceValueTransformer, save_object
 
 
 class DataTransformation:
@@ -102,22 +102,14 @@ class DataTransformation:
             file_path = self.config.preprocessor_path,
             obj = preprocessing_obj
 
-            self.save_processor(file_path[0], obj)
+            save_object(file_path[0], obj)
 
             # Saving preprocessor in preprocessor directory, which is tracked by git
 
             file_path = self.config.tracked_preprocessor_path,
             obj = preprocessing_obj
 
-            self.save_processor(file_path[0], obj)
+            save_object(file_path[0], obj)
 
         except Exception as e:
             raise CustomException(e, sys)
-
-    @staticmethod
-    def save_processor(file_path, processor):
-        try:
-            joblib.dump(processor, file_path)
-            logging.info(f"Processor saved successfully to {file_path}.h5")
-        except Exception as e:
-            logging.error(f"Error occurred while saving processor: {e}")

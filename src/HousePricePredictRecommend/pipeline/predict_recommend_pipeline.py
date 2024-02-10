@@ -1,11 +1,9 @@
-from joblib import load
 import sys
 import pandas as pd
 import numpy as np
 import math
 from HousePricePredictRecommend.utils.exception import CustomException
 from HousePricePredictRecommend.utils.common import load_object, output_within_range
-from joblib import load
 import os
 
 import os
@@ -58,19 +56,19 @@ class PredictRecommendPipeline:
             # print(features["RentOrSale"] == "Sale", "hiii")
 
             if (features["RentOrSale"] == "Rent").all():
-                model_path = os.path.join("model", "model.joblib")
+                model_path = os.path.join("model", "model.pkl")
             else:
-                model_path = os.path.join("model", "model_rent.joblib")
+                model_path = os.path.join("model", "model_rent.pkl")
             preprocessor_path = os.path.join("preprocessor", "preprocessor.h5")
             print("Before Loading")
             print(model_path, "model path")
-            model = load(model_path)
+            model = load_object(model_path)
             ##
             # model_path = "model/model.h5"
             # model = load(model_path)
             # print("Working")
 
-            preprocessor = load(preprocessor_path)
+            preprocessor = load_object(preprocessor_path)
             print("After Loading")
             fea_df = pd.DataFrame(features, columns=['propertyType', 'locality', 'furnishing',
                                                      'city', 'bedrooms', 'bathrooms', 'RentOrSale',  'exactPrice'])
@@ -171,13 +169,13 @@ if __name__ == "__main__":
 
     # Load the modelmodel = load_model(os.path.join("model", "model.h5"))
 
-    model = load(os.path.join("model", "model.joblib"))
-    print("HI", os.path.join("model", "model_rent.joblib"))
+    model = load_object(os.path.join("model", "model.pkl"))
+    print("HI", os.path.join("model", "model_rent.pkl"))
 
     print(model.get_params())
     print(model)
 
-    pro = load("preprocessor/preprocessor.h5")
+    pro = load_object("preprocessor/preprocessor.h5")
 
     predict_pipeline = PredictRecommendPipeline()
 
