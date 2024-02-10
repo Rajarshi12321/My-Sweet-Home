@@ -55,7 +55,7 @@ class PredictRecommendPipeline:
             # print(features["RentOrSale"], "hiii")
             # print(features["RentOrSale"] == "Sale", "hiii")
 
-            if (features["RentOrSale"] == "Rent").all():
+            if (features["RentOrSale"] != "Rent").all():
                 model_path = os.path.join("model", "model.pkl")
             else:
                 model_path = os.path.join("model", "model_rent.pkl")
