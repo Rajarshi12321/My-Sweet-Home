@@ -3,9 +3,9 @@ from pathlib import Path
 import logging
 
 # logging string
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s]: %(message)s:")
 
-project_name = 'HousePricePredictionRecommended'
+project_name = "HousePricePredictionRecommended"
 
 list_of_files = [
     ".github/workflows/.gitkeep",
@@ -23,9 +23,10 @@ list_of_files = [
     "requirements.txt",
     "setup.py",
     "research/trials.ipynb",
-    "templates/index.html"
-
-
+    "templates/index.html",
+    "model/__init__.py",
+    "preprocessor/__init__.py",
+    "recommend/__init__.py",
 ]
 
 
