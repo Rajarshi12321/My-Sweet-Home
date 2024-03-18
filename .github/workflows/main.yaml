@@ -89,9 +89,9 @@ jobs:
 
          
          
-      - name: Stop and remove container if running
-        run: |
-         docker ps -q --filter "name=housing" | grep -q . && docker stop housing && docker rm -fv housing
+      # - name: Stop and remove container if running
+      #   run: |
+      #    docker ps -q --filter "name=housing" | grep -q . && docker stop housing && docker rm -fv housing
        
       - name: Run Docker Image to serve users
         run: |
