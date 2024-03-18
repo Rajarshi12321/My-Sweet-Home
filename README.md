@@ -56,7 +56,6 @@ Kaggle Notebook : [https://www.kaggle.com/code/rajarshiroy0123/indian-house-pric
   - [Table of Contents](#table-of-contents)
   - [Images](#images)
   - [Installation and Dependencies](#installation-and-dependencies)
-  - [Working Directory](#working-directory)
   - [Working with the code](#working-with-the-code)
   - [Usage](#usage)
   - [Contributing](#contributing)
@@ -98,69 +97,6 @@ These are some required packages for our program which are mentioned in the Requ
 
 
 
-## Working Directory
-
-```
-📦Housing_predict_recommend
- ┣ 📂artifact
- ┃ ┗ 📜Dataset.csv
- ┣ 📂artifacts
- ┃ ┣ 📜data_preprocessed_recommend.csv
- ┃ ┣ 📜model.pkl
- ┃ ┣ 📜model_rent.pkl
- ┃ ┣ 📜preprocessor.pkl
- ┃ ┣ 📜processed_data.csv
- ┃ ┣ 📜recommend_data.csv
- ┃ ┗ 📜testing.py
- ┣ 📂logs
- ┣ 📂NOTEBOOK
- ┃ ┣ 📂DATA
- ┃ ┃ ┗ 📜Scraped_Data.csv
- ┃ ┗ 📜indian-house-price-prediction.ipynb
- ┣ 📂src
- ┃ ┣ 📂components
- ┃ ┃ ┣ 📜data_ingestion.py
- ┃ ┃ ┣ 📜data_transformation.py
- ┃ ┃ ┣ 📜model_trainer.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂pipeline
- ┃ ┃ ┣ 📜predict_pipeline.py
- ┃ ┃ ┣ 📜scraping_pipeline.py
- ┃ ┃ ┣ 📜train_pipeline.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂recommender
- ┃ ┃ ┣ 📜data_transformation_recommend.py
- ┃ ┃ ┣ 📜house_recommender.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📜exception.py
- ┃ ┣ 📜logger.py
- ┃ ┣ 📜utils.py
- ┃ ┗ 📜__init__.py
- ┣ 📂static
- ┃ ┣ 📂css
- ┃ ┃ ┗ 📜signup.css
- ┃ ┗ 📂img
- ┃ ┃ ┣ 📜beautiful_house.jpg
- ┃ ┃ ┣ 📜default_pic.png
- ┃ ┃ ┗ 📜No Suitable house image found.png
- ┣ 📂templates
- ┃ ┣ 📜get_elements.py
- ┃ ┣ 📜home.html
- ┃ ┣ 📜index.html
- ┃ ┗ 📜testing.html
- ┣ 📜.gitignore
- ┣ 📜.gitattributes
- ┣ 📜app.py
- ┣ 📜city_locality.npy
- ┣ 📜Dockerfile
- ┣ 📜LICENSE
- ┣ 📜main.py
- ┣ 📜README.md
- ┣ 📜requirements.txt
- ┗ 📜setup.py
- ```
-
-
 ## Working with the code
 
 
@@ -182,7 +118,7 @@ To run this project locally, please follow these steps:-
      ```
      Example:
      ```shell
-     conda create -n housing python=3.8 -y 
+     conda create -p housing python=3.8 -y 
      ```
 
 
@@ -193,7 +129,7 @@ To run this project locally, please follow these steps:-
       ```
       Example:
      ```shell
-     conda activate housing 
+     conda activate housing/
      ```
 
 4. **Install Dependencies**
@@ -263,5 +199,10 @@ I hope this README provides you with the necessary information to get started wi
 
 ## Reference
 
-I took reference from Krish Naik sir's [YouTube Playlist](https://youtube.com/playlist?list=PLZoTAELRMXVPS-dOaVbAux22vzqdgoGhG&si=WpPn00reSU9yYZzc).
+I took reference from:
 
+- Krish Naik sir's [YouTube Playlist](https://youtube.com/playlist?list=PLZoTAELRMXVPS-dOaVbAux22vzqdgoGhG&si=WpPn00reSU9yYZzc).
+
+- Complete End to End Deep Learning Project With MLFLOW,DVC And Deployment [YouTube video](https://www.youtube.com/watch?v=86BKEv0X2xU).
+
+- Kidney-Disease-Classification-MLflow-DVC [Github Repo](https://github.com/krishnaik06/Kidney-Disease-Classification-Deep-Learning-Project).
