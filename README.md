@@ -47,6 +47,19 @@ To understand about the feature engineering and model prediction for this partic
 Kaggle Notebook : [https://www.kaggle.com/code/rajarshiroy0123/indian-house-price-prediction](https://www.kaggle.com/code/rajarshiroy0123/indian-house-price-prediction)
 
 
+## Tech Stack
+- Python
+- Flask
+- HTML and CSS
+- Scikit-learn
+- DVC
+- MLFlow
+- Docker
+- Github Actions
+- AWS ECR
+- AWS EC2
+
+
 ## Table of Contents
 
 - [My Sweet Home - House Price Prediction \& Recommendation Project](#my-sweet-home---house-price-prediction--recommendation-project)
